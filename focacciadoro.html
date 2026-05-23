@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Focacciadoro — Carrieflips</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+  <style>
+    @font-face { font-family: 'Knewave'; src: url('Fonts/Knewave-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Asap'; src: url('Fonts/Asap-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Asap'; src: url('Fonts/Asap-Medium.ttf') format('truetype'); font-weight: 500; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Asap'; src: url('Fonts/Asap-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: swap; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --page-bg: #F5E9C4;
+      --ink: #1a1a18;
+      --muted: #8a8680;
+      --muted-dark: #4a4a46;
+      --border: rgba(26, 26, 24, 0.1);
+      --font-display: 'Asap', sans-serif;
+      --font-body: 'Asap', sans-serif;
+      --hero-font: 'Asap', sans-serif;
+      --hero-size: 92px;
+    }
+
+    html, body { min-height: 100%; }
+    body { background: var(--page-bg); font-family: var(--font-display); color: var(--ink); }
+
+    /* ── HERO ─────────────────────────────────────────────────── */
+
+    .hero {
+      width: 100%;
+      min-height: 480px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 48px;
+      background-size: cover;
+      background-position: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .hero-label {
+      font-family: var(--font-display);
+      font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .hero-title {
+      font-family: var(--hero-font);
+      font-size: var(--hero-size);
+      font-weight: 700;
+      font-style: italic;
+      line-height: 1.0;
+      color: var(--ink);
+    }
+    .hero-date {
+      font-family: var(--font-body);
+      font-size: 15px; font-weight: 300; color: var(--muted-dark); letter-spacing: 0.02em;
+    }
+
+    .page-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 24px 48px;
+      border-bottom: 1px solid var(--border);
+    }
+    .back-link {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--ink); }
+    .wordmark {
+      font-family: 'Knewave', cursive; font-size: 18px;
+      color: var(--ink); text-decoration: none; opacity: 0.35;
+      transition: opacity 0.2s;
+    }
+    .wordmark:hover { opacity: 0.7; }
+
+    .page-content {
+      max-width: 720px;
+      padding: 56px 48px 120px;
+    }
+
+    .project-eyebrow {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 16px;
+    }
+    .meta-tag {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .meta-dot { color: var(--muted); opacity: 0.4; font-size: 12px; }
+    .status-pill {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+      border: 1px solid rgba(26,26,24,0.25); border-radius: 4px; padding: 3px 8px;
+      color: var(--ink);
+    }
+
+    .project-name {
+      font-size: 60px; font-weight: 700; line-height: 1.0;
+      color: var(--ink); margin-bottom: 20px;
+    }
+    .project-desc {
+      font-family: var(--font-body);
+      font-size: 17px; font-weight: 300; line-height: 1.6;
+      color: var(--muted-dark); max-width: 560px;
+    }
+
+    hr.section-rule { border: none; border-top: 1px solid var(--border); margin: 48px 0 0; }
+
+    .log-section { padding-top: 36px; }
+    .log-section + .log-section { margin-top: 48px; border-top: 1px solid var(--border); }
+    .section-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 24px;
+    }
+
+    .log-entry { display: flex; gap: 28px; padding: 16px 0; border-bottom: 1px solid var(--border); }
+    .log-entry:last-child { border-bottom: none; }
+    .log-date {
+      font-size: 12px; font-weight: 300; color: var(--muted);
+      white-space: nowrap; width: 72px; flex-shrink: 0; padding-top: 3px;
+    }
+    .log-title {
+      font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 5px;
+    }
+    .log-note {
+      font-family: var(--font-body);
+      font-size: 13px; font-weight: 300; color: var(--muted-dark); line-height: 1.55;
+    }
+    .placeholder-note {
+      font-family: var(--font-body);
+      font-size: 13px; font-weight: 300; color: var(--muted); font-style: italic; padding-top: 4px;
+    }
+
+    /* ── CONTEXT NAV ─────────────────────────────────────────── */
+    .context-nav {
+      font-family: 'Asap Condensed', sans-serif;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--page-bg);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: max-height 0.3s ease, opacity 0.25s ease,
+                  padding-top 0.3s ease, padding-bottom 0.3s ease;
+    }
+    .context-nav.is-visible {
+      max-height: 52px;
+      opacity: 1;
+      pointer-events: auto;
+      padding-top: 14px;
+      padding-bottom: 14px;
+    }
+    .context-nav-left { display: flex; align-items: center; gap: 10px; }
+    .context-eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--muted); white-space: nowrap;
+    }
+    .context-project {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink); white-space: nowrap;
+    }
+    .context-sep { color: var(--muted); opacity: 0.4; font-size: 12px; }
+    .context-meta {
+      font-size: 10px; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted); white-space: nowrap;
+    }
+    .context-top {
+      font-family: 'Asap Condensed', sans-serif;
+      font-size: 10px; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted); background: none; border: none; cursor: pointer;
+      padding: 0; white-space: nowrap; transition: color 0.2s ease;
+    }
+    .context-top:hover { color: var(--ink); }
+
+  </style>
+</head>
+<body>
+
+  <coming-soon-banner></coming-soon-banner>
+
+  <nav class="page-nav">
+    <a href="index.html#build-log" class="back-link">← Back</a>
+    <a href="index.html" class="wordmark">Carrieflips</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="hero-label">Build Log</p>
+      <h1 class="hero-title">Focacciadoro</h1>
+      <p class="hero-date">April 2026</p>
+    </div>
+  </section>
+
+  <div class="context-nav" id="context-nav">
+    <div class="context-nav-left">
+      <span class="context-eyebrow">Build Log:</span>
+      <span class="context-project">Focacciadoro</span>
+      <span class="context-sep">·</span>
+      <span class="context-meta">Web</span>
+      <span class="context-sep">·</span>
+      <span class="context-meta">April 2026</span>
+    </div>
+    <button class="context-top" id="context-top">↑ Back to top</button>
+  </div>
+
+  <div class="page-content">
+
+    <header>
+      <div class="project-eyebrow">
+        <span class="meta-tag">Web</span>
+        <span class="meta-dot">·</span>
+        <span class="status-pill">In Development</span>
+      </div>
+      <p class="project-desc">A web app that combines the rhythm of making focaccia with intervals of focused work called pomodoros.</p>
+    </header>
+
+    <hr class="section-rule" />
+
+    <section class="log-section">
+      <h2 class="section-label">Build Log</h2>
+
+      <div class="log-entry">
+        <span class="log-date">Apr 28</span>
+        <div>
+          <p class="log-title">First working timer</p>
+          <p class="log-note">Core pomodoro interval running — 25 min focus, 5 min rest. The bread metaphor is clicking. Each break is a "fold." Each long rest is "proofing."</p>
+        </div>
+      </div>
+
+      <div class="log-entry">
+        <span class="log-date">Apr 21</span>
+        <div>
+          <p class="log-title">Concept and naming</p>
+          <p class="log-note">Focacciadoro = focaccia + pomodoro. The idea: structure your work around the rhythm of making bread. Started with plain HTML and vanilla JS — no framework, no build step.</p>
+        </div>
+      </div>
+
+      <div class="log-entry">
+        <span class="log-date">Apr 14</span>
+        <div>
+          <p class="log-title">The inspiration</p>
+          <p class="log-note">Made focaccia on a Sunday and kept checking the clock. The resting intervals mapped perfectly to pomodoro breaks. Wanted something that made the parallel explicit.</p>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="log-section">
+      <h2 class="section-label">Lessons</h2>
+      <p class="placeholder-note">Notes will go here as the project develops.</p>
+    </section>
+
+  </div>
+
+  <script src="js/coming-soon-banner.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const hero = document.querySelector('.hero');
+      const contextNav = document.getElementById('context-nav');
+      const heroObserver = new IntersectionObserver(
+        ([entry]) => contextNav.classList.toggle('is-visible', !entry.isIntersecting),
+        { threshold: 0 }
+      );
+      heroObserver.observe(hero);
+      document.getElementById('context-top').addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+  </script>
+
+</body>
+</html>

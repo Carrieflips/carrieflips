@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Head Rub — Carrieflips</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+  <style>
+    @font-face { font-family: 'Knewave'; src: url('Fonts/Knewave-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Asap'; src: url('Fonts/Asap-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Asap'; src: url('Fonts/Asap-Medium.ttf') format('truetype'); font-weight: 500; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Asap'; src: url('Fonts/Asap-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: swap; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --page-bg: #E4EDF8;
+      --ink: #1a1a18;
+      --muted: #8a8680;
+      --muted-dark: #4a4a46;
+      --border: rgba(26, 26, 24, 0.1);
+      --font-display: 'Asap', sans-serif;
+      --font-body: 'Asap', sans-serif;
+      --body-small: 14px;
+      --hero-font: 'Knewave', cursive;
+      --hero-size: 96px;
+    }
+
+    html, body { min-height: 100%; }
+    body { background: var(--page-bg); font-family: var(--font-display); color: var(--ink); }
+
+    /* ── HERO ─────────────────────────────────────────────────── */
+
+    .hero {
+      width: 100%;
+      min-height: 480px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 48px;
+      background-size: cover;
+      background-position: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .hero-label {
+      font-family: var(--font-display);
+      font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .hero-title {
+      font-family: var(--hero-font);
+      font-size: var(--hero-size);
+      line-height: 1.0;
+      color: var(--ink);
+    }
+    .hero-date {
+      font-family: var(--font-body);
+      font-size: 15px; font-weight: 300; color: var(--muted-dark); letter-spacing: 0.02em;
+    }
+    .app-store-badge { display: inline-block; transition: opacity 0.2s; }
+    .app-store-badge:hover { opacity: 0.75; }
+    .app-store-badge img { height: 44px; display: block; }
+
+    /* ── NAV ──────────────────────────────────────────────────── */
+
+    .page-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 24px 48px;
+      border-bottom: 1px solid var(--border);
+    }
+    .back-link {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--ink); }
+    .wordmark {
+      font-family: 'Knewave', cursive; font-size: 18px;
+      color: var(--ink); text-decoration: none; opacity: 0.35;
+      transition: opacity 0.2s;
+    }
+    .wordmark:hover { opacity: 0.7; }
+
+    /* ── LAYOUT ───────────────────────────────────────────────── */
+
+    .page-content {
+      padding: 56px 48px 120px;
+    }
+
+    /* Reading sections that should stay narrow */
+    .page-content header,
+    .constrained { max-width: 720px; }
+
+    /* ── HEADER ───────────────────────────────────────────────── */
+
+    .project-eyebrow {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 16px;
+    }
+    .meta-tag {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .meta-dot { color: var(--muted); opacity: 0.4; font-size: 12px; }
+    .status-pill {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+      border: 1px solid rgba(26,26,24,0.25); border-radius: 4px; padding: 3px 8px;
+      color: var(--ink);
+    }
+    .project-name {
+      font-size: 60px; font-weight: 700; line-height: 1.0;
+      color: var(--ink); margin-bottom: 24px;
+    }
+    .project-desc p {
+      font-family: var(--font-body);
+      font-size: 17px; font-weight: 300; line-height: 1.65;
+      color: var(--muted-dark); max-width: 600px;
+      margin-bottom: 14px;
+    }
+    .project-desc p:last-child { margin-bottom: 0; }
+
+    /* ── SECTION STRUCTURE ────────────────────────────────────── */
+
+    hr.section-rule { border: none; border-top: 1px solid var(--border); margin: 48px 0 0; }
+
+    .log-section { padding-top: 36px; }
+    .log-section + .log-section { margin-top: 48px; border-top: 1px solid var(--border); }
+
+    /* ── PRODUCT IMAGES ──────────────────────────────────────── */
+    .log-section.bleed { border-top: none; }
+    .log-section.bleed + .log-section { border-top: none; }
+    .log-section.bleed {
+      border-top: none;
+      padding-top: 0;
+      margin-left: -48px;
+      margin-right: -48px;
+    }
+    .product-images {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+    }
+    .product-image {
+      width: 100%;
+      height: 400px;
+      background: rgba(26, 26, 24, 0.07);
+      object-fit: cover;
+    }
+
+    /* ── TOOL STACK COLUMNS ──────────────────────────────────── */
+    .tool-groups {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0 48px;
+    }
+    .tool-group-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 16px;
+    }
+    .tool-item {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 10px 0;
+    }
+    .tool-label { width: auto; }
+    .tool-value { font-size: var(--body-small); }
+    .section-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 24px;
+    }
+
+    /* ── TOOL STACK ───────────────────────────────────────────── */
+
+    .tool-row {
+      display: flex; align-items: baseline; gap: 20px;
+      padding: 10px 0; border-bottom: 1px solid var(--border);
+    }
+    .tool-row:last-child { border-bottom: none; }
+    .tool-label {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted); width: 130px; flex-shrink: 0;
+    }
+    .tool-value {
+      font-family: var(--font-body);
+      font-size: var(--body-small); font-weight: 300; color: var(--muted-dark);
+    }
+
+    /* ── FIRSTS ───────────────────────────────────────────────── */
+
+    .firsts-list { list-style: none; }
+    .firsts-list li {
+      font-family: var(--font-body);
+      font-size: var(--body-small); font-weight: 300; color: var(--muted-dark);
+      line-height: 1.5; padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 14px;
+    }
+    .firsts-list li:last-child { border-bottom: none; }
+    .firsts-list li::before {
+      content: '→'; font-size: 11px; color: var(--muted); flex-shrink: 0;
+    }
+
+    /* ── FIRST-USE TAG + TOOLTIP ─────────────────────────────── */
+
+    .first-use {
+      position: relative;
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: rgba(26, 26, 24, 0.07);
+      border: 1px solid rgba(26, 26, 24, 0.15);
+      border-radius: 4px;
+      padding: 2px 7px;
+      vertical-align: middle;
+      cursor: default;
+    }
+
+    /* Arrow */
+    .first-use::before {
+      content: '';
+      position: absolute;
+      bottom: calc(100% + 4px);
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0; height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid var(--ink);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s ease;
+      z-index: 100;
+    }
+
+    /* Tooltip box */
+    .first-use::after {
+      content: 'First time use';
+      position: absolute;
+      bottom: calc(100% + 9px);
+      left: 50%;
+      transform: translateX(-50%) translateY(4px);
+      background: var(--ink);
+      color: rgba(255, 255, 255, 0.88);
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      text-transform: none;
+      white-space: nowrap;
+      padding: 5px 10px;
+      border-radius: 5px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s ease, transform 0.15s ease;
+      z-index: 100;
+    }
+
+    .first-use:hover::before,
+    .first-use:hover::after { opacity: 1; }
+    .first-use:hover::after { transform: translateX(-50%) translateY(0); }
+
+    /* ── LEARNINGS ────────────────────────────────────────────── */
+
+    .learning-entry {
+      padding-bottom: 40px; margin-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+    }
+    .learning-entry:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+    .learning-num {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 8px;
+    }
+    .learning-title {
+      font-size: 18px; font-weight: 600; color: var(--ink);
+      margin-bottom: 14px; line-height: 1.25;
+    }
+    .learning-body {
+      font-family: var(--font-body);
+      font-size: var(--body-small); font-weight: 300; color: var(--muted-dark);
+      line-height: 1.65; margin-bottom: 12px; max-width: 600px;
+    }
+    .learning-body:last-child { margin-bottom: 0; }
+    .learning-sub-title {
+      font-size: 15px; font-weight: 600; color: var(--ink);
+      margin-top: 24px; margin-bottom: 10px; line-height: 1.3;
+    }
+    .learning-links { list-style: none; margin-top: 14px; }
+    .learning-links li {
+      font-family: var(--font-body);
+      font-size: 13px; font-weight: 300; color: var(--muted-dark);
+      padding: 5px 0; border-bottom: 1px solid var(--border);
+    }
+    .learning-links li:last-child { border-bottom: none; }
+    .learning-links a {
+      color: var(--ink); text-decoration: underline; text-underline-offset: 3px;
+      text-decoration-color: rgba(26,26,24,0.3);
+      transition: text-decoration-color 0.2s;
+    }
+    .learning-links a:hover { text-decoration-color: var(--ink); }
+
+    /* ── CITATIONS ────────────────────────────────────────────── */
+
+    .citations-list { list-style: none; }
+    .citations-list li {
+      font-family: var(--font-body);
+      font-size: 12px; font-weight: 300; color: var(--muted);
+      padding: 5px 0;
+    }
+    .citations-list a {
+      color: var(--muted); text-decoration: underline; text-underline-offset: 3px;
+      text-decoration-color: rgba(138,134,128,0.4);
+      transition: color 0.2s, text-decoration-color 0.2s;
+      word-break: break-all;
+    }
+    .citations-list a:hover { color: var(--ink); text-decoration-color: var(--ink); }
+
+    /* ── CONTEXT NAV ─────────────────────────────────────────── */
+    .context-nav {
+      font-family: 'Asap Condensed', sans-serif;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--page-bg);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: max-height 0.3s ease, opacity 0.25s ease,
+                  padding-top 0.3s ease, padding-bottom 0.3s ease;
+    }
+    .context-nav.is-visible {
+      max-height: 52px;
+      opacity: 1;
+      pointer-events: auto;
+      padding-top: 14px;
+      padding-bottom: 14px;
+    }
+    .context-nav-left { display: flex; align-items: center; gap: 10px; }
+    .context-eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--muted); white-space: nowrap;
+    }
+    .context-project {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink); white-space: nowrap;
+    }
+    .context-sep { color: var(--muted); opacity: 0.4; font-size: 12px; }
+    .context-meta {
+      font-size: 10px; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted); white-space: nowrap;
+    }
+    .context-top {
+      font-family: 'Asap Condensed', sans-serif;
+      font-size: 10px; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted); background: none; border: none; cursor: pointer;
+      padding: 0; white-space: nowrap; transition: color 0.2s ease;
+    }
+    .context-top:hover { color: var(--ink); }
+  </style>
+</head>
+<body>
+
+  <coming-soon-banner></coming-soon-banner>
+
+  <nav class="page-nav">
+    <a href="index.html#build-log" class="back-link">← Back</a>
+    <a href="index.html" class="wordmark">Carrieflips</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="hero-label">Build Log</p>
+      <h1 class="hero-title">Head Rub</h1>
+      <p class="hero-date">February &amp; March 2026</p>
+      <a href="#" class="app-store-badge">
+        <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store" />
+      </a>
+    </div>
+  </section>
+
+  <div class="context-nav" id="context-nav">
+    <div class="context-nav-left">
+      <span class="context-eyebrow">Build Log:</span>
+      <span class="context-project">Head Rub</span>
+      <span class="context-sep">·</span>
+      <span class="context-meta">iOS</span>
+      <span class="context-sep">·</span>
+      <span class="context-meta">February &amp; March 2026</span>
+    </div>
+    <button class="context-top" id="context-top">↑ Back to top</button>
+  </div>
+
+  <div class="page-content">
+
+    <!-- ── HEADER ─────────────────────────────────────────────── -->
+
+    <header>
+      <div class="project-eyebrow">
+        <span class="meta-tag">iOS · React Native</span>
+        <span class="meta-dot">·</span>
+        <span class="status-pill">Launched</span>
+      </div>
+      <div class="project-desc">
+        <p>Since November of 2025, I've been a somewhat regular user of a simple app called Bend. Bend audibly guides users through simple stretching routines of varying length, and is reportedly earning $500,000 a month in subscription revenue.</p>
+        <p>I'm not typically motivated by the financial potential of a project, but had recently created a note in my phone of all the pressure points and head massage techniques that were most effective at relieving my migraines.</p>
+        <p>Head Rub is a mobile application designed to guide folks experiencing migraines, eye strain, or other tension in their head, face, and neck through self-administered massage routines. The graphics are hand drawn by me, and audio voice overs provided by my Dad.</p>
+      </div>
+    </header>
+
+    <hr class="section-rule" />
+
+    <!-- ── FIRSTS ────────────────────────────────────────────────── -->
+
+    <section class="log-section constrained">
+      <h2 class="section-label">Firsts</h2>
+      <ul class="firsts-list">
+        <li>Productionizing payments</li>
+        <li>App Store submission (and approval!)</li>
+        <li>Feature flagging</li>
+        <li>Content management system</li>
+      </ul>
+    </section>
+
+    <!-- ── SCREENSHOTS ───────────────────────────────────────────── -->
+
+    <section class="log-section bleed">
+      <div class="product-images">
+        <div class="product-image"></div>
+        <div class="product-image"></div>
+      </div>
+    </section>
+
+    <!-- ── TOOL STACK ────────────────────────────────────────────── -->
+
+    <section class="log-section">
+      <h2 class="section-label">Tool Stack</h2>
+      <div class="tool-groups">
+
+        <div class="tool-group">
+          <h3 class="tool-group-label">AI</h3>
+          <div class="tool-item">
+            <span class="tool-label">Build</span>
+            <span class="tool-value">vibecode.app › <span class="first-use">Claude Code</span></span>
+          </div>
+          <div class="tool-item">
+            <span class="tool-label">IDE</span>
+            <span class="tool-value">Cursor</span>
+          </div>
+          <div class="tool-item">
+            <span class="tool-label">Web design &amp; dev</span>
+            <span class="tool-value">Claude Code</span>
+          </div>
+        </div>
+
+        <div class="tool-group">
+          <h3 class="tool-group-label">Content</h3>
+          <div class="tool-item">
+            <span class="tool-label">Graphics</span>
+            <span class="tool-value"><span class="first-use">Procreate</span></span>
+          </div>
+          <div class="tool-item">
+            <span class="tool-label">Audio processing</span>
+            <span class="tool-value"><span class="first-use">Auphonics</span></span>
+          </div>
+        </div>
+
+        <div class="tool-group">
+          <h3 class="tool-group-label">Stack</h3>
+          <div class="tool-item">
+            <span class="tool-label">Database</span>
+            <span class="tool-value">Supabase</span>
+          </div>
+          <div class="tool-item">
+            <span class="tool-label">Payments</span>
+            <span class="tool-value">RevenueCat</span>
+          </div>
+          <div class="tool-item">
+            <span class="tool-label">Repository</span>
+            <span class="tool-value">Github</span>
+          </div>
+          <div class="tool-item">
+            <span class="tool-label">Hosting &amp; deploy</span>
+            <span class="tool-value">Vercel</span>
+          </div>
+          <div class="tool-item">
+            <span class="tool-label">App compiler</span>
+            <span class="tool-value">Expo (EAS Build)</span>
+          </div>
+          <div class="tool-item">
+            <span class="tool-label">Testing</span>
+            <span class="tool-value">TestFlight</span>
+          </div>
+          <div class="tool-item">
+            <span class="tool-label">Bug tracking</span>
+            <span class="tool-value"><span class="first-use">Sentry</span></span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── LEARNINGS ───────────────────────────────────────────── -->
+
+    <section class="log-section constrained">
+      <h2 class="section-label">Lessons</h2>
+
+      <div class="learning-entry">
+        <p class="learning-num">01</p>
+        <h3 class="learning-title">Database-driven development, with a regimented build plan.</h3>
+        <p class="learning-body">In February, I participated in the "28 Days of Lovable" challenge, where Lazar Jovanovic walked vibe coders through his preferred method for building products. Despite not using Lovable or building Head Rub as a web app, I found his ideas on executing build plans, building database-first, and context management particularly useful.</p>
+        <p class="learning-body">Instead of re-writing his work, I'll simply link to the best content in the month:</p>
+        <ul class="learning-links">
+          <li><a href="https://youtu.be/1-B0-Y54C04?si=ZVW0waMUwoU6hjLO" target="_blank">Database Thinking (This Is What Makes Apps Real)</a></li>
+          <li><a href="https://youtu.be/1O3KI3VgHLo" target="_blank">Documenting Backwards (This Is How Projects Stay Alive)</a></li>
+          <li><a href="https://youtu.be/IX_PYYVa0Y8" target="_blank">How I Actually Build (Systems Beat Memory)</a></li>
+        </ul>
+      </div>
+
+      <div class="learning-entry">
+        <p class="learning-num">02</p>
+        <h3 class="learning-title">Distribution is the new highest hurdle to jump.</h3>
+        <p class="learning-body">According to Sensor Tower, new app submissions to the App Store jumped 84% in the first quarter of 2026 compared to the same period in 2025. The media primarily reported this as evidence that the App Store was "filling with AI vibe coded slop," but I read it as a growing discoverability and distribution challenge.</p>
+        <p class="learning-body">This pushed me to focus even more narrowly on migraine sufferers. By keeping my audience narrowly targeted, I felt that I could leverage both my personal story and uncommon channels for distribution.</p>
+      </div>
+
+      <div class="learning-entry">
+        <p class="learning-num">03</p>
+        <h3 class="learning-title">Design a lifestyle, not a business.</h3>
+        <p class="learning-body">Silicon Valley has long reinforced that "Ideas are cheap, execution is what matters." But what happens in a world where execution is also cheap? For a creative and curious person, deciding what to build becomes a more nuanced question.</p>
+        <p class="learning-body">When making that choice, I considered questions like: Who do I want to serve? Who would I love to do user research with? What do I miss getting to do in my daily life? Who would I love to collaborate with? What social issues would I love to support?</p>
+        <p class="learning-body">The questions revealed two places where my Head Rub app idea uniquely had potential: I missed building projects with my Dad, and I missed getting to draw.</p>
+
+        <p class="learning-sub-title">Drawing by hand</p>
+        <p class="learning-body">Like many product designers, I was feeling legitimately unmoored by the shift in my role. The "making" part of my work is increasingly outsourced to AI, meaning the task work I loved most — disappearing into a Figma flow-state for an afternoon — was gone.</p>
+        <p class="learning-body">Instead of <em>drawing</em> to design, increasingly designers are expected to <em>write</em> to do our work. This shift has opened the door to a much wider set of people now able to design products, which is something I believe to be unequivocally a good thing.</p>
+        <p class="learning-body">But the difference between drawing and writing feels, to me, as substantial as the difference between talking and singing. They may achieve the same end, but the way I feel isn't the same. And I really missed drawing.</p>
+        <p class="learning-body">With Head Rub, I found a concept that was going to require lots of graphics that referenced hands, heads, musculature and anatomy — images that AI specifically struggles to accurately generate. Getting to hand draw these graphics scratched an itch that my day job no longer provided, and acts as a kind of defensive moat for the app preventing others from building a competitive product quickly.</p>
+
+        <p class="learning-sub-title">The voice of a concerned Dad</p>
+        <p class="learning-body">In the age of AI, it's easy to generate a fake human voice. But Head Rub is a product that someone experiencing a migraine uses when they're in pain, nauseous, and alone in the dark. (Speaking from personal experience.)</p>
+        <p class="learning-body">When I thought of who might provide the voice for the product, I thought of my Dad and his "radio voice." I remembered the way he talked to my little sister in recovery rooms after her medical procedures, or my brother after he lost a baseball game, or talked to me on the front porch swing during thunder storms. He's able to drop into a calming register that helps folks relax when they're stressed. Head Rub needed the voice of a concerned Dad.</p>
+        <p class="learning-body">And it gave me an excuse to call my Dad more frequently, and collaborate on a project that leveraged both of our skills.</p>
+        <p class="learning-body">In both cases, I solved for something that was lacking in my life, in a way that added unique value to the project.</p>
+      </div>
+
+    </section>
+
+    <!-- ── CITATIONS ───────────────────────────────────────────── -->
+
+    <section class="log-section constrained">
+      <h2 class="section-label">Citations</h2>
+      <ul class="citations-list">
+        <li><a href="https://app.sensortower.com/overview/1513988468?country=US" target="_blank">Sensor Tower — App Store overview</a></li>
+        <li><a href="https://february.lovable.app/" target="_blank">28 Days of Lovable — february.lovable.app</a></li>
+        <li><a href="https://www.linkedin.com/in/lazar-jovanovic/" target="_blank">Lazar Jovanovic — LinkedIn</a></li>
+      </ul>
+    </section>
+
+  </div>
+
+  <script src="js/coming-soon-banner.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const hero = document.querySelector('.hero');
+      const contextNav = document.getElementById('context-nav');
+      const heroObserver = new IntersectionObserver(
+        ([entry]) => contextNav.classList.toggle('is-visible', !entry.isIntersecting),
+        { threshold: 0 }
+      );
+      heroObserver.observe(hero);
+      document.getElementById('context-top').addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kauai Beach Weather — Carrieflips</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+  <style>
+    @font-face { font-family: 'Knewave'; src: url('Fonts/Knewave-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Asap'; src: url('Fonts/Asap-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Asap'; src: url('Fonts/Asap-Medium.ttf') format('truetype'); font-weight: 500; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Asap'; src: url('Fonts/Asap-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: swap; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --page-bg: #D5EFF8;
+      --ink: #1a1a18;
+      --muted: #8a8680;
+      --muted-dark: #4a4a46;
+      --border: rgba(26, 26, 24, 0.1);
+      --font-display: 'Asap', sans-serif;
+      --font-body: 'Asap', sans-serif;
+      --body-small: 14px;
+      --hero-font: 'Asap', sans-serif;
+      --hero-size: 72px;
+    }
+
+    html, body { min-height: 100%; }
+    body { background: var(--page-bg); font-family: var(--font-display); color: var(--ink); }
+
+    /* ── HERO ─────────────────────────────────────────────────── */
+
+    .hero {
+      width: 100%;
+      min-height: 480px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 48px;
+      background-size: cover;
+      background-position: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .hero-label {
+      font-family: var(--font-display);
+      font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .hero-title {
+      font-family: var(--hero-font);
+      font-size: var(--hero-size);
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      line-height: 1.1;
+      color: var(--ink);
+    }
+    .hero-date {
+      font-family: var(--font-body);
+      font-size: 15px; font-weight: 300; color: var(--muted-dark); letter-spacing: 0.02em;
+    }
+
+    /* ── NAV ──────────────────────────────────────────────────── */
+
+    .page-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 24px 48px;
+      border-bottom: 1px solid var(--border);
+    }
+    .back-link {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--ink); }
+    .wordmark {
+      font-family: 'Knewave', cursive; font-size: 18px;
+      color: var(--ink); text-decoration: none; opacity: 0.35;
+      transition: opacity 0.2s;
+    }
+    .wordmark:hover { opacity: 0.7; }
+
+    /* ── LAYOUT ───────────────────────────────────────────────── */
+
+    .page-content {
+      padding: 56px 48px 120px;
+    }
+
+    .page-content header,
+    .constrained { max-width: 720px; }
+
+    /* ── HEADER ───────────────────────────────────────────────── */
+
+    .project-eyebrow {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 16px;
+    }
+    .meta-tag {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .meta-dot { color: var(--muted); opacity: 0.4; font-size: 12px; }
+    .status-pill {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+      border: 1px solid rgba(26,26,24,0.25); border-radius: 4px; padding: 3px 8px;
+      color: var(--ink);
+    }
+    .project-desc p {
+      font-family: var(--font-body);
+      font-size: 17px; font-weight: 300; line-height: 1.65;
+      color: var(--muted-dark); max-width: 600px;
+      margin-bottom: 14px;
+    }
+    .project-desc p:last-child { margin-bottom: 0; }
+
+    /* ── SECTION STRUCTURE ────────────────────────────────────── */
+
+    hr.section-rule { border: none; border-top: 1px solid var(--border); margin: 48px 0 0; }
+
+    .log-section { padding-top: 36px; }
+    .log-section + .log-section { margin-top: 48px; border-top: 1px solid var(--border); }
+
+    .section-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 24px;
+    }
+
+    /* ── FIRSTS ───────────────────────────────────────────────── */
+
+    .firsts-list { list-style: none; }
+    .firsts-list li {
+      font-family: var(--font-body);
+      font-size: var(--body-small); font-weight: 300; color: var(--muted-dark);
+      line-height: 1.5; padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 14px;
+    }
+    .firsts-list li:last-child { border-bottom: none; }
+    .firsts-list li::before {
+      content: '→'; font-size: 11px; color: var(--muted); flex-shrink: 0;
+    }
+
+    /* ── TOOL STACK COLUMNS ──────────────────────────────────── */
+
+    .tool-groups {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0 48px;
+    }
+    .tool-group-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 16px;
+    }
+    .tool-item {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 10px 0;
+    }
+    .tool-label {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .tool-value {
+      font-family: var(--font-body);
+      font-size: var(--body-small); font-weight: 300; color: var(--muted-dark);
+    }
+
+    /* ── LESSONS ─────────────────────────────────────────────── */
+
+    .learning-entry {
+      padding-bottom: 40px; margin-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+    }
+    .learning-entry:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+    .learning-num {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 8px;
+    }
+    .learning-title {
+      font-size: 18px; font-weight: 600; color: var(--ink);
+      margin-bottom: 14px; line-height: 1.25;
+    }
+    .learning-body {
+      font-family: var(--font-body);
+      font-size: var(--body-small); font-weight: 300; color: var(--muted-dark);
+      line-height: 1.65; margin-bottom: 12px; max-width: 600px;
+    }
+    .learning-body:last-child { margin-bottom: 0; }
+
+    /* ── STATUS ──────────────────────────────────────────────── */
+
+    .status-note {
+      font-family: var(--font-body);
+      font-size: var(--body-small); font-weight: 300; color: var(--muted-dark);
+      line-height: 1.65; max-width: 600px;
+    }
+
+    /* ── CONTEXT NAV ─────────────────────────────────────────── */
+    .context-nav {
+      font-family: 'Asap Condensed', sans-serif;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--page-bg);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: max-height 0.3s ease, opacity 0.25s ease,
+                  padding-top 0.3s ease, padding-bottom 0.3s ease;
+    }
+    .context-nav.is-visible {
+      max-height: 52px;
+      opacity: 1;
+      pointer-events: auto;
+      padding-top: 14px;
+      padding-bottom: 14px;
+    }
+    .context-nav-left { display: flex; align-items: center; gap: 10px; }
+    .context-eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--muted); white-space: nowrap;
+    }
+    .context-project {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink); white-space: nowrap;
+    }
+    .context-sep { color: var(--muted); opacity: 0.4; font-size: 12px; }
+    .context-meta {
+      font-size: 10px; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted); white-space: nowrap;
+    }
+    .context-top {
+      font-family: 'Asap Condensed', sans-serif;
+      font-size: 10px; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted); background: none; border: none; cursor: pointer;
+      padding: 0; white-space: nowrap; transition: color 0.2s ease;
+    }
+    .context-top:hover { color: var(--ink); }
+  </style>
+</head>
+<body>
+
+  <coming-soon-banner></coming-soon-banner>
+
+  <nav class="page-nav">
+    <a href="index.html#build-log" class="back-link">← Back</a>
+    <a href="index.html" class="wordmark">Carrieflips</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="hero-label">Build Log</p>
+      <h1 class="hero-title">Kauai Beach Weather</h1>
+      <p class="hero-date">January 2026</p>
+    </div>
+  </section>
+
+  <div class="context-nav" id="context-nav">
+    <div class="context-nav-left">
+      <span class="context-eyebrow">Build Log:</span>
+      <span class="context-project">Kauai Beach Weather</span>
+      <span class="context-sep">·</span>
+      <span class="context-meta">iOS</span>
+      <span class="context-sep">·</span>
+      <span class="context-meta">January 2026</span>
+    </div>
+    <button class="context-top" id="context-top">↑ Back to top</button>
+  </div>
+
+  <div class="page-content">
+
+    <!-- ── HEADER ─────────────────────────────────────────────── -->
+
+    <header>
+      <div class="project-eyebrow">
+        <span class="meta-tag">iOS · React Native</span>
+        <span class="meta-dot">·</span>
+        <span class="status-pill">TestFlight</span>
+      </div>
+      <div class="project-desc">
+        <p>In January of 2026, I spent a week working remotely with 10 tech workers on the small Hawaiian island of Kauai. Each day at 3pm, we'd close our laptops, grab our beach bags, and open weather apps to make the optimal choice of where to spend the afternoon.</p>
+        <p>At the time I was working as Head of Product at Woz, an AI-enabled mobile app builder focused on selling to small business owners. In a fit of competitive research, I built a simple app that aggregated the weather across beaches in Kauai, helping tourists and locals alike quickly decide where to spend sunny days.</p>
+      </div>
+    </header>
+
+    <hr class="section-rule" />
+
+    <!-- ── FIRSTS ────────────────────────────────────────────────── -->
+
+    <section class="log-section constrained">
+      <h2 class="section-label">Firsts</h2>
+      <ul class="firsts-list">
+        <li>Data integrations (2 weather sources)</li>
+        <li>Environment variables</li>
+        <li>Integrating payments</li>
+        <li>Encryption of user generated data</li>
+        <li>SSH into project files with Cursor</li>
+      </ul>
+    </section>
+
+    <!-- ── TOOL STACK ────────────────────────────────────────────── -->
+
+    <section class="log-section constrained">
+      <h2 class="section-label">Tool Stack</h2>
+      <div class="tool-groups">
+
+        <div class="tool-group">
+          <h3 class="tool-group-label">AI</h3>
+          <div class="tool-item">
+            <span class="tool-label">Builder</span>
+            <span class="tool-value">vibecode.app</span>
+          </div>
+          <div class="tool-item">
+            <span class="tool-label">Editor</span>
+            <span class="tool-value">Cursor</span>
+          </div>
+          <div class="tool-item">
+            <span class="tool-label">Web design &amp; dev</span>
+            <span class="tool-value">Claude (design-frontend skill)</span>
+          </div>
+        </div>
+
+        <div class="tool-group">
+          <h3 class="tool-group-label">Stack</h3>
+          <div class="tool-item">
+            <span class="tool-label">Database</span>
+            <span class="tool-value">Supabase</span>
+          </div>
+          <div class="tool-item">
+            <span class="tool-label">Payments</span>
+            <span class="tool-value">RevenueCat</span>
+          </div>
+          <div class="tool-item">
+            <span class="tool-label">Repository</span>
+            <span class="tool-value">Github</span>
+          </div>
+          <div class="tool-item">
+            <span class="tool-label">Web hosting &amp; deploy</span>
+            <span class="tool-value">Vercel</span>
+          </div>
+          <div class="tool-item">
+            <span class="tool-label">Framework &amp; build</span>
+            <span class="tool-value">Expo (EAS Build)</span>
+          </div>
+          <div class="tool-item">
+            <span class="tool-label">Testing</span>
+            <span class="tool-value">TestFlight</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── LESSONS ────────────────────────────────────────────────── -->
+
+    <section class="log-section constrained">
+      <h2 class="section-label">Lessons</h2>
+
+      <div class="learning-entry">
+        <p class="learning-num">01</p>
+        <h3 class="learning-title">Apple-review driven development.</h3>
+        <p class="learning-body">In my 15 years of product design work, I've learned the deep product validation and understanding of getting your MVP into customer hands. With Kauai Beach Weather, I stayed laser focused on what I needed to get my app into the App Store. When I came to decision points in the build, I'd often ask AI, "What does Apple require during the app submission review process?" and discover that there was a clear winner among options.</p>
+      </div>
+
+      <div class="learning-entry">
+        <p class="learning-num">02</p>
+        <h3 class="learning-title">The line between project and business is blurry.</h3>
+        <p class="learning-body">The closer I got to publishing the app, the more I encountered questions of setting up a business. Did I need a business bank account? An LLC? I knew I needed to find a domain, but did I also need to set up a support email address? What should I really name this thing? Is that handle available on socials? I decided to keep things ruthlessly MVP, and stuck to Apple-review driven development to get to market fast.</p>
+      </div>
+
+      <div class="learning-entry">
+        <p class="learning-num">03</p>
+        <h3 class="learning-title">An all-in-one platform is convenient for a project, but pricey and strategically difficult for a business.</h3>
+        <p class="learning-body">I found that vibe coding platforms were significantly overstating the complexity of productionizing your work. Setting up a database was trivial with Supabase and environment variables — free, and made my data readily available to other tools I might use in the future to target marketing, spin up a website, or build analytics dashboards. Integrating and testing payments with RevenueCat was a bit confusing, thanks to payment-specific jargon targeted at an engineer, but manageable.</p>
+        <p class="learning-body">Serious builders prefer flexibility and durability over all-in-one convenience.</p>
+      </div>
+
+      <div class="learning-entry">
+        <p class="learning-num">04</p>
+        <h3 class="learning-title">Figma became a canvas to ensure consistency. A visual reference, not a design tool.</h3>
+        <p class="learning-body">I still needed a place to see everything at once, and at the time, no builder was giving me that aggregate, zoomed-out view. I ended up building one in Figma by screenshotting the screens of my app into a file, and using them as inspiration for the generated website. I then designed the app icon, App Store images, and cropped graphics for my database alongside those visuals to ensure a consistent, professional design.</p>
+      </div>
+
+    </section>
+
+    <!-- ── STATUS ─────────────────────────────────────────────────── -->
+
+    <section class="log-section constrained">
+      <h2 class="section-label">Status</h2>
+      <p class="status-note">After shipping this project to TestFlight, I left it behind for the next build. In January of 2026, Claude Code had just hit Silicon Valley in force, and I wanted to get my hands into the mix.</p>
+    </section>
+
+  </div>
+
+  <script src="js/coming-soon-banner.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const hero = document.querySelector('.hero');
+      const contextNav = document.getElementById('context-nav');
+      const heroObserver = new IntersectionObserver(
+        ([entry]) => contextNav.classList.toggle('is-visible', !entry.isIntersecting),
+        { threshold: 0 }
+      );
+      heroObserver.observe(hero);
+      document.getElementById('context-top').addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Components — Carrieflips</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+  <style>
+    @font-face { font-family: 'Knewave'; src: url('Fonts/Knewave-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Asap'; src: url('Fonts/Asap-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Asap'; src: url('Fonts/Asap-Medium.ttf') format('truetype'); font-weight: 500; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Asap'; src: url('Fonts/Asap-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: swap; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --page-bg:   #F0EDE6;
+      --ink:       #1a1a18;
+      --muted:     #8a8680;
+      --muted-dark:#4a4a46;
+      --border:    rgba(26, 26, 24, 0.1);
+      --font-display: 'Asap', sans-serif;
+      --font-body:    'Asap Condensed', sans-serif;
+    }
+
+    html, body { min-height: 100%; }
+    body { background: var(--page-bg); font-family: var(--font-body); color: var(--ink); }
+
+    /* ── PAGE NAV ───────────────────────────────────────────── */
+
+    .page-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 24px 48px;
+      border-bottom: 1px solid var(--border);
+    }
+    .back-link {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--ink); }
+    .wordmark {
+      font-family: 'Knewave', cursive; font-size: 18px;
+      color: var(--ink); text-decoration: none; opacity: 0.35;
+      transition: opacity 0.2s;
+    }
+    .wordmark:hover { opacity: 0.7; }
+
+    /* ── PAGE HEADER ────────────────────────────────────────── */
+
+    .page-header {
+      padding: 56px 48px 40px;
+      border-bottom: 1px solid var(--border);
+      max-width: 960px;
+    }
+    .page-eyebrow {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 12px;
+    }
+    .page-title {
+      font-family: var(--font-display);
+      font-size: 52px; font-weight: 700; line-height: 1;
+      color: var(--ink); margin-bottom: 16px;
+    }
+    .page-desc {
+      font-size: 15px; font-weight: 300; line-height: 1.6;
+      color: var(--muted-dark); max-width: 480px;
+    }
+
+    /* ── SECTION WRAPPER ────────────────────────────────────── */
+
+    .comp-section {
+      padding: 56px 48px;
+      border-bottom: 1px solid var(--border);
+      max-width: 960px;
+    }
+    .comp-section:last-of-type { border-bottom: none; }
+
+    .section-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 32px;
+    }
+
+    /* ── TYPE SYSTEM ────────────────────────────────────────── */
+
+    .type-row {
+      display: flex;
+      align-items: baseline;
+      gap: 32px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .type-row:last-child { border-bottom: none; }
+    .type-meta {
+      flex-shrink: 0;
+      width: 200px;
+    }
+    .type-name {
+      font-family: var(--font-body);
+      font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--ink); margin-bottom: 4px;
+    }
+    .type-spec {
+      font-family: var(--font-body);
+      font-size: 11px; font-weight: 300; color: var(--muted); line-height: 1.5;
+    }
+    .type-sample { flex: 1; }
+
+    /* ── Type sample overrides ── */
+    .ts-wordmark  { font-family: 'Knewave', cursive; font-size: 20px; }
+    .ts-hero-xl   { font-family: 'Asap', sans-serif; font-size: 72px; font-weight: 700; font-style: italic; line-height: 1; }
+    .ts-hero-l    { font-family: 'Asap', sans-serif; font-size: 52px; font-weight: 700; line-height: 1; }
+    .ts-section   { font-family: 'Asap', sans-serif; font-size: 32px; font-weight: 700; line-height: 1.1; }
+    .ts-project   { font-family: 'Asap', sans-serif; font-size: 22px; font-weight: 700; line-height: 1.1; }
+    .ts-body-lg   { font-family: 'Asap', sans-serif; font-size: 17px; font-weight: 300; line-height: 1.65; color: var(--muted-dark); }
+    .ts-body      { font-family: 'Asap Condensed', sans-serif; font-size: 14px; font-weight: 400; line-height: 1.5; color: var(--muted-dark); }
+    .ts-body-sm   { font-family: 'Asap Condensed', sans-serif; font-size: 13px; font-weight: 300; line-height: 1.55; color: var(--muted-dark); }
+    .ts-label     { font-family: 'Asap Condensed', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+    .ts-subnav    { font-family: 'Asap Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+    .ts-log-title { font-family: 'Asap', sans-serif; font-size: 15px; font-weight: 600; color: var(--ink); }
+
+    /* ── COLORS ─────────────────────────────────────────────── */
+
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .color-grid + .section-sublabel { margin-top: 40px; }
+
+    .section-sublabel {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 16px;
+    }
+
+    .swatch {
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+    .swatch-color {
+      height: 56px;
+    }
+    .swatch-info {
+      padding: 10px 12px 12px;
+      background: rgba(255,255,255,0.5);
+    }
+    .swatch-name {
+      font-family: var(--font-body);
+      font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+      color: var(--ink); margin-bottom: 3px;
+    }
+    .swatch-hex {
+      font-family: 'Asap Condensed', sans-serif;
+      font-size: 11px; font-weight: 300; color: var(--muted);
+    }
+
+    /* ── COMPONENT PREVIEWS ─────────────────────────────────── */
+
+    .component-row {
+      margin-bottom: 48px;
+    }
+    .component-row:last-child { margin-bottom: 0; }
+    .component-label {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 12px;
+    }
+    .component-frame {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .component-frame.dark { background: #111111; }
+    .component-frame.play { background: #dbffb0; }
+
+    /* Footer component — let it fill the frame naturally */
+    .component-frame site-footer .site-footer {
+      margin: 0;
+      border-radius: 0;
+    }
+    /* The work footer has its own background (#e8e5de) */
+    /* The play footer is transparent — show the frame's bg color through it */
+
+    .component-spec {
+      margin-top: 10px;
+      font-family: var(--font-body);
+      font-size: 11px; font-weight: 300; color: var(--muted); line-height: 1.6;
+    }
+    .component-spec code {
+      font-family: 'Asap Condensed', sans-serif;
+      font-size: 11px; font-weight: 400;
+      background: rgba(26,26,24,0.07); border-radius: 3px; padding: 1px 5px;
+      color: var(--ink);
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="page-nav">
+    <a href="index.html" class="back-link">← Back</a>
+    <a href="index.html" class="wordmark">Carrieflips</a>
+  </nav>
+
+  <header class="page-header">
+    <p class="page-eyebrow">Internal</p>
+    <h1 class="page-title">Components</h1>
+    <p class="page-desc">Type system, color palette, and shared UI components. Changes made here cascade to every page that uses them.</p>
+  </header>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- TYPE SYSTEM                                               -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <section class="comp-section">
+    <h2 class="section-label">Type System</h2>
+
+    <div class="type-row">
+      <div class="type-meta">
+        <p class="type-name">Wordmark</p>
+        <p class="type-spec">Knewave 400<br>20px</p>
+      </div>
+      <div class="type-sample">
+        <span class="ts-wordmark">Carrieflips</span>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">
+        <p class="type-name">Hero XL</p>
+        <p class="type-spec">Asap 700 italic<br>72–120px · lh 1.0</p>
+      </div>
+      <div class="type-sample">
+        <span class="ts-hero-xl">Focacciadoro</span>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">
+        <p class="type-name">Hero L</p>
+        <p class="type-spec">Asap 700<br>52px · lh 1.0</p>
+      </div>
+      <div class="type-sample">
+        <span class="ts-hero-l">Build Log</span>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">
+        <p class="type-name">Section Heading</p>
+        <p class="type-spec">Asap 700<br>32px · lh 1.1</p>
+      </div>
+      <div class="type-sample">
+        <span class="ts-section">About</span>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">
+        <p class="type-name">Project Name</p>
+        <p class="type-spec">Asap 700<br>22px · lh 1.1</p>
+      </div>
+      <div class="type-sample">
+        <span class="ts-project">Head Rub</span>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">
+        <p class="type-name">Log Entry Title</p>
+        <p class="type-spec">Asap 600<br>15px</p>
+      </div>
+      <div class="type-sample">
+        <span class="ts-log-title">First working timer</span>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">
+        <p class="type-name">Body Large</p>
+        <p class="type-spec">Asap 300<br>17px · lh 1.65</p>
+      </div>
+      <div class="type-sample">
+        <span class="ts-body-lg">I'm a product designer and AI-enabled builder with over a decade of experience joining companies at day one.</span>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">
+        <p class="type-name">Body</p>
+        <p class="type-spec">Asap Condensed 400<br>14px · lh 1.5</p>
+      </div>
+      <div class="type-sample">
+        <span class="ts-body">Building software is getting faster and cheaper every day. It's never been more important to bring taste, judgment, and experience to what gets built.</span>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">
+        <p class="type-name">Body Small</p>
+        <p class="type-spec">Asap Condensed 300<br>13px · lh 1.55</p>
+      </div>
+      <div class="type-sample">
+        <span class="ts-body-sm">Notes will go here as the project develops.</span>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">
+        <p class="type-name">Label / Eyebrow</p>
+        <p class="type-spec">Asap Condensed 700<br>10px · 0.2em · UC</p>
+      </div>
+      <div class="type-sample">
+        <span class="ts-label">Build Log</span>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">
+        <p class="type-name">Subnav</p>
+        <p class="type-spec">Asap Condensed 700<br>11px · 0.18em · UC</p>
+      </div>
+      <div class="type-sample">
+        <span class="ts-subnav">About · Case Studies · Build Log · Essays</span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- COLORS                                                    -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <section class="comp-section">
+    <h2 class="section-label">Colors</h2>
+
+    <p class="section-sublabel">Core</p>
+    <div class="color-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#F0EDE6;"></div>
+        <div class="swatch-info"><p class="swatch-name">Cream</p><p class="swatch-hex">#F0EDE6</p></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#111111;"></div>
+        <div class="swatch-info"><p class="swatch-name">Black</p><p class="swatch-hex">#111111</p></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#1a1a18;"></div>
+        <div class="swatch-info"><p class="swatch-name">Ink</p><p class="swatch-hex">#1a1a18</p></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#8a8680;"></div>
+        <div class="swatch-info"><p class="swatch-name">Muted</p><p class="swatch-hex">#8a8680</p></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#4a4a46;"></div>
+        <div class="swatch-info"><p class="swatch-name">Muted Dark</p><p class="swatch-hex">#4a4a46</p></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#e8e5de;"></div>
+        <div class="swatch-info"><p class="swatch-name">Footer Bg</p><p class="swatch-hex">#e8e5de</p></div>
+      </div>
+    </div>
+
+    <p class="section-sublabel">Mode Backgrounds</p>
+    <div class="color-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#F0EDE6;"></div>
+        <div class="swatch-info"><p class="swatch-name">Work Left</p><p class="swatch-hex">#F0EDE6</p></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#dbffb0;"></div>
+        <div class="swatch-info"><p class="swatch-name">Play Left</p><p class="swatch-hex">#dbffb0</p></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#FFC184;"></div>
+        <div class="swatch-info"><p class="swatch-name">Play Right</p><p class="swatch-hex">#FFC184</p></div>
+      </div>
+    </div>
+
+    <p class="section-sublabel">Build Log Pages</p>
+    <div class="color-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#E4EDF8;"></div>
+        <div class="swatch-info"><p class="swatch-name">Head Rub</p><p class="swatch-hex">#E4EDF8</p></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#FEF3C4;"></div>
+        <div class="swatch-info"><p class="swatch-name">BRB</p><p class="swatch-hex">#FEF3C4</p></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#D5EFF8;"></div>
+        <div class="swatch-info"><p class="swatch-name">Kauai Beach Weather</p><p class="swatch-hex">#D5EFF8</p></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#F5E9C4;"></div>
+        <div class="swatch-info"><p class="swatch-name">Focacciadoro</p><p class="swatch-hex">#F5E9C4</p></div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- COMPONENTS                                                -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <section class="comp-section">
+    <h2 class="section-label">Components</h2>
+
+    <div class="component-row">
+      <p class="component-label">Footer — Work variant</p>
+      <div class="component-frame">
+        <site-footer></site-footer>
+      </div>
+      <p class="component-spec">
+        <code>&lt;site-footer&gt;&lt;/site-footer&gt;</code>
+        — default. Shows wordmark, Connect → label, and social icons on a warm gray background.
+      </p>
+    </div>
+
+    <div class="component-row">
+      <p class="component-label">Footer — Play variant</p>
+      <div class="component-frame play">
+        <site-footer variant="play"></site-footer>
+      </div>
+      <p class="component-spec">
+        <code>&lt;site-footer variant="play"&gt;&lt;/site-footer&gt;</code>
+        — wordmark hidden, icons right-aligned, background transparent.
+        Toggle via <code>el.setAttribute('variant', 'play')</code> / <code>el.removeAttribute('variant')</code>.
+      </p>
+    </div>
+
+    <div class="component-row">
+      <p class="component-label">Coming Soon Banner</p>
+      <div class="component-frame" style="overflow:hidden; border-radius:8px;">
+        <coming-soon-banner></coming-soon-banner>
+      </div>
+      <p class="component-spec">
+        <code>&lt;coming-soon-banner&gt;&lt;/coming-soon-banner&gt;</code>
+        — sticky pale-green banner. Used on all Build Log pages until graphics are added.
+      </p>
+    </div>
+
+  </section>
+
+  <script src="js/site-footer.js"></script>
+  <script src="js/coming-soon-banner.js"></script>
+
+</body>
+</html>

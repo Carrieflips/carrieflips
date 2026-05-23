@@ -9,6 +9,38 @@
   <link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet" />
 
   <style>
+    @font-face {
+      font-family: 'Knewave';
+      src: url('Fonts/Knewave-Regular.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Asap';
+      src: url('Fonts/Asap-Regular.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Asap';
+      src: url('Fonts/Asap-Medium.ttf') format('truetype');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Asap';
+      src: url('Fonts/Asap-Bold.ttf') format('truetype');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
     *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
@@ -23,17 +55,19 @@
       --muted-dark: #4a4a46;
       --border: #d4cfc7;
       --card-bg: #2e2e2b;
-      --font-display: 'Asap Condensed', sans-serif;
+      --font-display: 'Asap', sans-serif;
       --font-body: 'Asap Condensed', sans-serif;
+      --body-small: 14px;
     }
 
-    html, body {
+    html {
       height: 100%;
-      overflow: hidden;
     }
 
     body {
+      min-height: 100%;
       display: flex;
+      align-items: flex-start;
       font-family: var(--font-body);
       background: var(--black);
     }
@@ -46,16 +80,17 @@
       background: var(--cream);
       display: flex;
       flex-direction: column;
-      overflow: hidden;
+      transition: background-color 0.4s ease;
     }
 
     .col-right {
       width: 40%;
-      min-height: 100vh;
+      height: 100vh;
       background: var(--black);
       display: flex;
       flex-direction: column;
-      position: relative;
+      position: sticky;
+      top: 0;
       overflow: hidden;
     }
 
@@ -64,30 +99,64 @@
     .left-inner {
       display: flex;
       flex-direction: column;
-      height: 100%;
-      padding: 28px 44px 36px;
+      min-height: 100vh;
+      padding: 28px 44px 0;
+    }
+
+    /* ── NAV HEADER ──────────────────────────────────────────── */
+
+    .nav-header {
+      /* Contains only the nav bar now — subnav moved outside as sticky sibling */
     }
 
     /* ── NAV ──────────────────────────────────────────────────── */
 
     nav {
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
       align-items: center;
-      justify-content: space-between;
-      margin-bottom: 48px;
+      margin-bottom: 56px;
+    }
+
+    .nav-right {
+      justify-self: end;
     }
 
     .wordmark {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 15px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
+      font-family: 'Knewave', var(--font-display);
+      font-weight: 400;
+      font-size: 20px;
+      letter-spacing: 0.04em;
+      text-transform: none;
       color: var(--ink);
       text-decoration: none;
       line-height: 1;
       display: inline-block;
       perspective: 400px;
+      position: relative;
+    }
+
+    .wordmark::after {
+      content: 'Carrie Phillips — Designer';
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+      opacity: 0;
+      transform: translateY(-4px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      pointer-events: none;
+    }
+
+    .wordmark:hover::after {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .wordmark:hover {
@@ -108,13 +177,22 @@
     .nav-right a {
       display: flex;
       align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
       color: var(--muted-dark);
-      transition: color 0.2s;
+      opacity: 0.45;
       text-decoration: none;
+      background-color: transparent;
+      transition: color 0.2s ease, opacity 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
     }
 
     .nav-right a:hover {
       color: var(--ink);
+      opacity: 1;
+      transform: translateY(-2px);
+      background-color: rgba(17, 17, 17, 0.07);
     }
 
     .nav-right svg {
@@ -125,64 +203,213 @@
 
     .lang-btn {
       font-family: var(--font-display);
-      font-weight: 600;
+      font-weight: 500;
       font-size: 12px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--muted-dark);
+      color: var(--muted);
+      opacity: 0.55;
       cursor: pointer;
       border: none;
       background: none;
       padding: 0;
-      transition: color 0.2s;
+      transition: color 0.2s, opacity 0.2s;
     }
 
     .lang-btn:hover {
       color: var(--ink);
+      opacity: 1;
+    }
+
+    .lang-btn-mobile {
+      display: none; /* shown only in mobile media query */
     }
 
     /* ── TOGGLE ───────────────────────────────────────────────── */
 
     .toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      border: 1px solid var(--ink);
+      border-radius: 8px;
+      padding: 2px;
+    }
+
+    /* ── SUBNAV SENTINEL ─────────────────────────────────────── */
+
+    #subnav-sentinel {
+      height: 1px;
+      pointer-events: none;
+    }
+
+    /* ── SUBNAV ───────────────────────────────────────────────── */
+
+    .subnav {
       display: flex;
       align-items: center;
       gap: 0;
-      margin-bottom: 36px;
+
+      /* Sticky — pins to viewport top once nav scrolls away */
+      position: sticky;
+      top: 0;
+      z-index: 50;
+
+      /* Full-bleed background covers scrolling content beneath */
+      background: var(--cream);
+      margin-left: -44px;
+      margin-right: -44px;
+      padding: 14px 44px 16px;
+
+      max-height: 60px;
+      overflow: hidden;
+      opacity: 1;
+      /* Entrance — expands height, padding, and fades in */
+      transition: max-height 0.25s ease, opacity 0.2s ease,
+                  padding-top 0.25s ease, padding-bottom 0.25s ease;
+    }
+
+    .subnav.collapsed {
+      max-height: 0;
+      opacity: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      /* Exit — opacity fade only */
+      transition: opacity 0.2s ease;
+    }
+
+    .subnav-btn {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0 0 4px;
+      line-height: 1;
+      position: relative;
+      transition: color 0.2s ease;
+      margin-right: 20px;
+    }
+
+    .subnav-btn:last-child {
+      margin-right: 0;
+    }
+
+    .subnav-btn::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--ink);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.2s ease;
+    }
+
+    .subnav-btn.active {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .subnav-btn.active::after {
+      transform: scaleX(1);
+    }
+
+    .subnav-label {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink);
+      white-space: nowrap;
+      user-select: none;
+      pointer-events: none;
+      padding-bottom: 4px; /* matches subnav-btn bottom padding for baseline alignment */
+
+      /* Truly zero width — takes no space, doesn't push buttons */
+      max-width: 0;
+      overflow: hidden;
+      opacity: 0;
+      margin-right: 0;
+
+      transition: max-width 0.4s ease, opacity 0.35s ease, margin-right 0.4s ease;
+    }
+
+    .subnav.is-stuck .subnav-label {
+      /* Grows into place, pushing buttons right */
+      max-width: 80px;
+      opacity: 1;
+      margin-right: 20px;
+    }
+
+    .subnav-top {
+      margin-left: auto;
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0 0 4px;
+      line-height: 1;
+      white-space: nowrap;
+      transition: color 0.2s ease, opacity 0.35s ease, transform 0.35s ease;
+
+      /* Hidden and offset right until stuck */
+      opacity: 0;
+      transform: translateX(8px);
+      pointer-events: none;
+    }
+
+    .subnav-top:hover {
+      color: var(--ink);
+    }
+
+    .subnav.is-stuck .subnav-top {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
     }
 
     .toggle-btn {
-      font-family: var(--font-display);
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.2em;
+      font-family: 'Asap', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
       background: none;
       border: none;
       cursor: pointer;
-      padding: 0;
+      padding: 5px 14px;
+      border-radius: 5px;
       line-height: 1;
-      transition: color 0.2s;
+      opacity: 1;
+      transition: color 0.25s ease, opacity 0.25s ease, background-color 0.2s ease;
     }
 
     .toggle-btn.active {
-      color: var(--ink);
+      color: var(--cream);
+      background: var(--ink);
+      opacity: 1;
     }
 
     .toggle-btn.inactive {
       color: var(--muted);
-      font-weight: 600;
+      font-weight: 500;
+      opacity: 0.55;
     }
 
-    .toggle-sep {
-      font-family: var(--font-display);
-      font-size: 10px;
-      font-weight: 400;
-      color: var(--muted);
-      margin: 0 8px;
-      letter-spacing: 0;
-      line-height: 1;
-      user-select: none;
-    }
 
     /* ── BODY CONTENT ─────────────────────────────────────────── */
 
@@ -190,8 +417,13 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       max-width: 560px;
+      padding-top: 8px;
+      padding-bottom: 48px;
+    }
+
+    .col-left:not(.work-mode) .left-content {
+      justify-content: center;
     }
 
     .bio p {
@@ -276,12 +508,344 @@
       text-decoration: none;
       display: inline-block;
       white-space: nowrap;
-      transition: background 0.2s, color 0.2s;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.2s, color 0.2s, transform 0.2s ease;
       flex-shrink: 0;
+    }
+
+    .dl-btn::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -80%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(
+        to right,
+        transparent 0%,
+        rgba(255, 255, 255, 0.28) 50%,
+        transparent 100%
+      );
+      transform: skewX(-15deg);
+      pointer-events: none;
     }
 
     .dl-btn:hover {
       background: #000;
+      transform: translateY(-1px);
+    }
+
+    .dl-btn:hover::after {
+      animation: shimmer 400ms ease forwards;
+    }
+
+    @keyframes shimmer {
+      from { left: -80%; }
+      to   { left: 130%; }
+    }
+
+    /* ── HERO PLACEHOLDER ────────────────────────────────────── */
+
+
+    /* ── WORK SECTIONS ───────────────────────────────────────── */
+
+    .work-sections {
+      margin-top: 16px;
+      padding-bottom: 48px;
+    }
+
+    .work-sections.hidden {
+      display: none;
+    }
+
+    .content-section {
+      padding-top: 56px;
+      padding-bottom: 56px;
+      border-top: 1px solid var(--border);
+      scroll-margin-top: 24px;
+    }
+
+    #about {
+      border-top: none;
+    }
+
+    #about .section-heading {
+      display: none;
+    }
+
+    .section-heading {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .section-title {
+      font-family: var(--font-body);
+      font-size: 26px;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 24px;
+      line-height: 1.3;
+    }
+
+    .section-placeholder {
+      font-size: 14px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── SECTION READING WIDTH ───────────────────────────────── */
+
+    #about .bio,
+    #about .meta-line,
+    #essays .essay-list {
+      max-width: 560px;
+    }
+
+    /* ── CASE STUDIES ─────────────────────────────────────────── */
+
+    .cs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .cs-card {
+      background: #ffffff;
+      overflow: hidden;
+    }
+
+    .cs-card-image {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: var(--border);
+      display: block;
+      object-fit: cover;
+    }
+
+    .cs-card-body {
+      padding: 18px 20px 22px;
+    }
+
+    .cs-card-eyebrow {
+      font-family: var(--font-display);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .cs-card-title {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+
+    .cs-card-desc {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--muted-dark);
+      line-height: 1.55;
+    }
+
+    .cs-card-tag {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: #dbffb0;
+      color: var(--ink);
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 767px) {
+      .cs-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ── BUILD LOG ────────────────────────────────────────────── */
+
+    .build-table-wrap {
+      background: #ffffff;
+      padding: 24px 0;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .build-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-display);
+    }
+
+    .build-table thead th {
+      font-size: 10px;
+      font-weight: 400 !important;
+      letter-spacing: 0.14em !important;
+      text-transform: uppercase !important;
+      color: var(--muted) !important;
+      text-align: left;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #ece8e2;
+    }
+
+    .build-table tbody td {
+      padding: 14px 0;
+      border-bottom: 1px solid #ece8e2;
+      vertical-align: top;
+      font-size: var(--body-small);
+      line-height: 1.5;
+      transition: background-color 0.15s ease;
+    }
+
+    .build-table tbody tr {
+      cursor: pointer;
+    }
+
+    .build-table tbody tr:hover td {
+      background-color: rgba(26, 26, 24, 0.04);
+    }
+
+    .build-table .col-date {
+      font-weight: 300;
+      color: var(--muted-dark);
+      width: 80px;
+      padding-left: 24px;
+      padding-right: 16px;
+      white-space: nowrap;
+    }
+
+    .build-table .col-name {
+      font-weight: 600;
+      color: var(--ink);
+      width: 120px;
+      padding-right: 16px;
+    }
+
+    .build-table .col-desc {
+      font-weight: 300;
+      color: var(--muted-dark);
+      padding-right: 16px;
+    }
+
+    .build-table .col-platform {
+      font-weight: 300;
+      color: var(--muted-dark);
+      white-space: nowrap;
+      padding-right: 16px;
+    }
+
+    .build-table .col-status {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: right;
+      white-space: nowrap;
+      padding-right: 24px;
+    }
+
+    /* ── TOOLS GRID ──────────────────────────────────────────── */
+
+    .tools-block {
+      margin-top: 48px;
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 10px;
+    }
+
+    .tool-logo {
+      aspect-ratio: 1;
+      background: var(--border);
+      border-radius: 10px;
+    }
+
+    /* ── ESSAYS ───────────────────────────────────────────────── */
+
+    .essay-list {
+      list-style: none;
+    }
+
+    .essay-item {
+      padding: 22px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .essay-item:first-child {
+      padding-top: 0;
+    }
+
+    .essay-title {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      margin-bottom: 5px;
+    }
+
+    .essay-link {
+      color: inherit;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .essay-link:hover { opacity: 0.6; }
+
+    .essay-subtitle {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--muted-dark);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .essay-meta {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .essay-date {
+      font-family: var(--font-display);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+
+    .essay-tag {
+      font-family: var(--font-display);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted-dark);
+      background: var(--border);
+      padding: 2px 7px;
     }
 
     /* ── CONTENT PANELS (crossfade) ──────────────────────────── */
@@ -291,17 +855,35 @@
       /* Height is set by JS to match tallest panel */
     }
 
+    @keyframes panelFadeOut {
+      from { opacity: 1; transform: translateY(0); }
+      to   { opacity: 0; transform: translateY(-8px); }
+    }
+
+    @keyframes panelFadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
     .content-panel {
       position: absolute;
       top: 0; left: 0; right: 0;
       opacity: 0;
-      transition: opacity 0.3s ease;
       pointer-events: none;
     }
 
     .content-panel.visible {
       opacity: 1;
       pointer-events: auto;
+    }
+
+    .content-panel.leaving {
+      animation: panelFadeOut 250ms ease both;
+      pointer-events: none;
+    }
+
+    .content-panel.entering {
+      animation: panelFadeIn 300ms ease both;
     }
 
     /* Build card fade + collapse */
@@ -324,7 +906,7 @@
     /* ── RIGHT COLUMN ─────────────────────────────────────────── */
 
     .col-right {
-      transition: background 0.3s ease;
+      transition: background-color 0.4s ease;
     }
 
     .col-right::before {
@@ -344,6 +926,8 @@
       flex-direction: column;
       height: 100%;
       padding: 0;
+      position: relative;
+      z-index: 1;
     }
 
     /* ── RECENT POST CARD ─────────────────────────────────────── */
@@ -453,11 +1037,6 @@
     /* ── MOBILE ───────────────────────────────────────────────── */
 
     @media (max-width: 767px) {
-      html, body {
-        height: auto;
-        overflow: auto;
-      }
-
       body {
         flex-direction: column;
       }
@@ -465,20 +1044,20 @@
       .col-left {
         width: 100%;
         min-height: auto;
-        height: auto;
-        overflow: visible;
       }
 
       .left-inner {
-        height: auto;
-        padding: 24px 24px 32px;
+        min-height: unset;
+        padding: 24px 24px 0;
       }
 
       .left-content {
         flex: none;
+        padding-bottom: 32px;
       }
 
       .col-right {
+        position: static;
         width: 100%;
         height: 50vh;
         overflow: hidden;
@@ -487,6 +1066,39 @@
       .right-inner {
         height: 100%;
         padding: 0;
+      }
+
+      .subnav {
+        margin-left: -24px;
+        margin-right: -24px;
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+
+      .subnav-label {
+        display: none;
+      }
+
+      .subnav-top-text {
+        display: none;
+      }
+
+      .col-right::before {
+        display: none;
+      }
+
+      /* Hide nav lang button, right-align toggle */
+      .nav-right {
+        display: none;
+      }
+
+      nav {
+        display: flex;
+        align-items: center;
+      }
+
+      .toggle {
+        margin-left: auto;
       }
 
       .build-card {
@@ -499,22 +1111,61 @@
       }
     }
 
-    /* ── FADE-IN ──────────────────────────────────────────────── */
+    /* ── PAGE LOAD STAGGER ────────────────────────────────────── */
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(10px); }
+    @keyframes animateIn {
+      from { opacity: 0; transform: translateY(8px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    .left-inner > * {
-      animation: fadeUp 0.55s ease both;
+    .left-inner.animate-in .wordmark    { animation: animateIn 450ms ease both; animation-delay: 0ms; }
+    .left-inner.animate-in .nav-right   { animation: animateIn 450ms ease both; animation-delay: 100ms; }
+    .left-inner.animate-in .toggle      { animation: animateIn 450ms ease both; animation-delay: 200ms; }
+    .left-inner.animate-in .subnav      { animation: animateIn 450ms ease both; animation-delay: 250ms; }
+    .left-inner.animate-in .bio         { animation: animateIn 450ms ease both; animation-delay: 300ms; }
+    .left-inner.animate-in .meta-line   { animation: animateIn 450ms ease both; animation-delay: 400ms; }
+    .left-inner.animate-in .build-card  { animation: animateIn 450ms ease both; animation-delay: 500ms; }
+
+    /* ── AMBIENT CIRCLES ─────────────────────────────────────── */
+
+    .ambient-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
     }
 
-    nav         { animation-delay: 0.05s; }
-    .toggle     { animation-delay: 0.15s; }
-    .left-content { animation-delay: 0.25s; }
+    @keyframes ambientFloat {
+      0%, 100% { transform: translateY(0);     opacity: 0.06; }
+      50%       { transform: translateY(-20px); opacity: 0.16; }
+    }
 
-    .post-card  { animation: fadeUp 0.55s 0.35s ease both; }
+    .ambient-circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgb(240, 237, 230);
+    }
+
+    .ambient-circle:nth-child(1) { width: 80px;  height: 80px;  top:  8%; left: 12%; animation: ambientFloat  7.0s ease-in-out infinite; animation-delay:  0.0s; }
+    .ambient-circle:nth-child(2) { width: 120px; height: 120px; top: 55%; left: 60%; animation: ambientFloat  9.0s ease-in-out infinite; animation-delay: -2.5s; }
+    .ambient-circle:nth-child(3) { width: 45px;  height: 45px;  top: 25%; left: 75%; animation: ambientFloat  6.0s ease-in-out infinite; animation-delay: -1.0s; }
+    .ambient-circle:nth-child(4) { width: 30px;  height: 30px;  top: 72%; left: 20%; animation: ambientFloat  8.0s ease-in-out infinite; animation-delay: -4.0s; }
+    .ambient-circle:nth-child(5) { width: 90px;  height: 90px;  top: 40%; left: 35%; animation: ambientFloat 10.0s ease-in-out infinite; animation-delay: -3.0s; }
+    .ambient-circle:nth-child(6) { width: 55px;  height: 55px;  top: 85%; left: 78%; animation: ambientFloat  7.5s ease-in-out infinite; animation-delay: -5.0s; }
+    .ambient-circle:nth-child(7) { width: 38px;  height: 38px;  top: 15%; left: 48%; animation: ambientFloat  5.5s ease-in-out infinite; animation-delay: -1.8s; }
+
+    @media (max-width: 767px) {
+      .ambient-layer { opacity: 0.5; }
+    }
+
+    /* ── FOOTER (layout overrides — styles live in js/site-footer.js) ── */
+
+    site-footer .site-footer { margin: 0 -44px; }
+
+    @media (max-width: 767px) {
+      site-footer .site-footer { margin: 0 -24px; }
+    }
   </style>
 </head>
 <body>
@@ -522,51 +1173,40 @@
   <!-- ══════════════════════════════════════════════════════════ -->
   <!-- LEFT COLUMN                                               -->
   <!-- ══════════════════════════════════════════════════════════ -->
-  <div class="col-left">
+  <div class="col-left work-mode">
     <div class="left-inner">
 
-      <!-- NAV -->
-      <nav>
-        <a href="/" class="wordmark">Carrieflips</a>
-        <div class="nav-right">
+      <!-- NAV HEADER -->
+      <div class="nav-header">
 
-          <!-- X / Twitter -->
-          <a href="https://x.com/carrieflips" target="_blank" rel="noopener" aria-label="X">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.912-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-            </svg>
-          </a>
+        <!-- NAV -->
+        <nav>
+          <a href="/" class="wordmark">Carrieflips</a>
 
-          <!-- LinkedIn -->
-          <a href="https://www.linkedin.com/in/carriemphillips/" target="_blank" rel="noopener" aria-label="LinkedIn">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-            </svg>
-          </a>
+          <!-- TOGGLE (centered in nav grid) -->
+          <div class="toggle">
+            <button class="toggle-btn active" id="btn-work" onclick="setActive('work')" data-i18n="toggleWork">Work</button>
+            <button class="toggle-btn inactive" id="btn-play" onclick="setActive('play')" data-i18n="togglePlay">Play</button>
+          </div>
 
-          <!-- GitHub -->
-          <a href="https://github.com/Carrieflips" target="_blank" rel="noopener" aria-label="GitHub">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
-            </svg>
-          </a>
+          <div class="nav-right">
+            <button class="lang-btn" aria-label="Language selector">EN</button>
+          </div>
+        </nav>
 
-          <!-- Substack -->
-          <a href="https://carrieflips.substack.com/" target="_blank" rel="noopener" aria-label="Substack">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/>
-            </svg>
-          </a>
+      </div><!-- /nav-header -->
 
-          <button class="lang-btn" aria-label="Language selector">EN</button>
-        </div>
-      </nav>
+      <!-- Sentinel — 1px trigger watched by IntersectionObserver to detect sticky state -->
+      <div id="subnav-sentinel" aria-hidden="true"></div>
 
-      <!-- TOGGLE -->
-      <div class="toggle">
-        <button class="toggle-btn active" id="btn-work" onclick="setActive('work')" data-i18n="toggleWork">Work</button>
-        <span class="toggle-sep">/</span>
-        <button class="toggle-btn inactive" id="btn-play" onclick="setActive('play')" data-i18n="togglePlay">Play</button>
+      <!-- SUBNAV — sticky, lives outside nav-header so it can pin throughout full scroll -->
+      <div class="subnav" id="subnav">
+        <span class="subnav-label" aria-hidden="true">Work</span>
+        <button class="subnav-btn active" data-sub="about">About</button>
+        <button class="subnav-btn" data-sub="case-studies">Case Studies</button>
+        <button class="subnav-btn" data-sub="build-log">Build Log</button>
+        <button class="subnav-btn" data-sub="essays">Essays</button>
+        <button class="subnav-top" id="subnav-top"><span class="subnav-top-arrow">↑</span><span class="subnav-top-text"> Back to top</span></button>
       </div>
 
       <!-- MAIN CONTENT -->
@@ -575,17 +1215,8 @@
         <!-- Crossfade wrapper — sized by the taller panel -->
         <div class="content-panels-wrap" id="panels-wrap">
 
-          <!-- WORK PANEL -->
-          <div class="content-panel visible" id="panel-work">
-            <div class="bio">
-              <p data-i18n="workBio1">I'm a product designer and AI-enabled builder with over a decade of experience joining companies at day one. I care deeply about whether a product is beautiful, intuitive, and genuinely useful — <em>especially in the most tangled, broken industries.</em></p>
-              <p data-i18n="workBio2">Building software is getting faster and cheaper everyday. I believe it's never been more important to bring taste, judgment, and experience to what gets built. Let's align teams around a common vision, and hold the quality bar high.</p>
-            </div>
-            <p class="meta-line">
-              <strong data-i18n="workMetaLabel">Industries of interest</strong>
-              <span class="meta-values" data-i18n="workMetaValues"> / insurtech, govtech, addiction, disability services, IRL social</span>
-            </p>
-          </div>
+          <!-- WORK PANEL (content moved to About section) -->
+          <div class="content-panel visible" id="panel-work"></div>
 
           <!-- PLAY PANEL -->
           <div class="content-panel" id="panel-play">
@@ -601,16 +1232,213 @@
 
         </div><!-- /panels-wrap -->
 
-        <!-- How I Build card — hidden in PLAY mode -->
-        <div class="build-card" id="build-card" style="display:none">
-          <div class="card-text">
-            <p class="card-title" data-i18n="cardTitle">How I build</p>
-            <p class="card-sub" data-i18n="cardSub">Design principles as prompting guardrails that respect users</p>
-          </div>
-          <a href="#" class="dl-btn" data-i18n="dlBtn">Download the .md</a>
-        </div>
 
-      </div>
+      </div><!-- /left-content -->
+
+      <!-- WORK SECTIONS — outside left-content so cards use full column width -->
+      <div class="work-sections" id="work-sections">
+
+          <section class="content-section" id="about">
+            <h2 class="section-heading">About</h2>
+            <div class="bio">
+              <p data-i18n="workBio1">I'm a product designer and AI-enabled builder with over a decade of experience joining companies at day one. I care deeply about whether a product is beautiful, intuitive, and genuinely useful — <em>especially in the most tangled, broken industries.</em></p>
+              <p data-i18n="workBio2">Building software is getting faster and cheaper everyday. I believe it's never been more important to bring taste, judgment, and experience to what gets built. Let's align teams around a common vision, and hold the quality bar high.</p>
+            </div>
+            <p class="meta-line">
+              <strong data-i18n="workMetaLabel">Industries of interest</strong>
+              <span class="meta-values" data-i18n="workMetaValues"> / insurtech, govtech, addiction, disability services, IRL social</span>
+            </p>
+          </section>
+
+          <section class="content-section" id="case-studies">
+            <h2 class="section-heading">Case Studies</h2>
+            <div class="cs-grid">
+
+              <div class="cs-card">
+                <div class="cs-card-image"></div>
+                <div class="cs-card-body">
+                  <span class="cs-card-tag">Coming soon</span>
+                  <p class="cs-card-eyebrow">Insurtech · 2024</p>
+                  <h3 class="cs-card-title">Redesigning the Claims Experience</h3>
+                  <p class="cs-card-desc">End-to-end redesign of a first-notice-of-loss flow for a commercial insurance platform — reducing average completion time and increasing adjuster confidence scores.</p>
+                </div>
+              </div>
+
+              <div class="cs-card">
+                <div class="cs-card-image"></div>
+                <div class="cs-card-body">
+                  <span class="cs-card-tag">Coming soon</span>
+                  <p class="cs-card-eyebrow">Govtech · 2023</p>
+                  <h3 class="cs-card-title">Permitting at Human Speed</h3>
+                  <p class="cs-card-desc">Simplifying a 14-step municipal permit application into a guided, plain-language experience accessible to residents without professional help.</p>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          <section class="content-section" id="build-log">
+            <h2 class="section-heading">Build Log</h2>
+            <p class="section-title">Personal projects and lessons in vibe coding</p>
+            <div class="build-table-wrap">
+            <table class="build-table">
+              <thead>
+                <tr>
+                  <th class="col-date">Date</th>
+                  <th class="col-name">Name</th>
+                  <th class="col-desc">Description</th>
+                  <th class="col-platform">Platform</th>
+                  <th class="col-status">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-href="focacciadoro.html">
+                  <td class="col-date">Apr 2026</td>
+                  <td class="col-name">Focacciadoro</td>
+                  <td class="col-desc">A web app that combines the rhythm of making focaccia with intervals of focused work called pomodoros.</td>
+                  <td class="col-platform">Web</td>
+                  <td class="col-status"><span class="cs-card-tag">Coming soon</span></td>
+                </tr>
+                <tr data-href="head-rub.html">
+                  <td class="col-date">Feb 2026</td>
+                  <td class="col-name">Head Rub</td>
+                  <td class="col-desc">An app to guide folks experiencing migraines, eye strain, or other tension in their head, face, and neck through self-administered massage routines.</td>
+                  <td class="col-platform">iOS</td>
+                  <td class="col-status">Launched</td>
+                </tr>
+                <tr data-href="brb.html">
+                  <td class="col-date">Feb 2026</td>
+                  <td class="col-name">BRB</td>
+                  <td class="col-desc">An AIM-style app to help millennials stay in touch with their friends.</td>
+                  <td class="col-platform">iOS</td>
+                  <td class="col-status">TestFlight</td>
+                </tr>
+                <tr data-href="kauai-beach-weather.html">
+                  <td class="col-date">Jan 2026</td>
+                  <td class="col-name">Kauai Beach Weather</td>
+                  <td class="col-desc">The quickest way to decide which beach to go to in Kauai.</td>
+                  <td class="col-platform">iOS</td>
+                  <td class="col-status">TestFlight</td>
+                </tr>
+              </tbody>
+            </table>
+            </div>
+
+          </section>
+
+          <section class="content-section" id="essays">
+            <h2 class="section-heading">Essays</h2>
+            <ul class="essay-list">
+
+              <li class="essay-item">
+                <h3 class="essay-title"><a href="https://carrieflips.substack.com/p/words-on-quotes-that-make-me-feel-dumb" target="_blank" rel="noopener" class="essay-link">Words on Quotes That Make Me Feel Dumb (and What They Mean)</a></h3>
+                <p class="essay-subtitle">Part 10 of the Insurance Onboarding Series.</p>
+                <div class="essay-meta">
+                  <span class="essay-date">March 2024</span>
+                  <span class="essay-tag">Insurtech</span>
+                </div>
+              </li>
+
+              <li class="essay-item">
+                <h3 class="essay-title"><a href="https://carrieflips.substack.com/p/why-insurance-coverages-continue-to-have" target="_blank" rel="noopener" class="essay-link">Why Insurance Coverages Continue to Have Weird Names</a></h3>
+                <p class="essay-subtitle">Part 9 of the Insurance Onboarding Series.</p>
+                <div class="essay-meta">
+                  <span class="essay-date">March 2024</span>
+                  <span class="essay-tag">Insurtech</span>
+                </div>
+              </li>
+
+              <li class="essay-item">
+                <h3 class="essay-title"><a href="https://carrieflips.substack.com/p/insurance-quotes-are-hard" target="_blank" rel="noopener" class="essay-link">Insurance Quotes are Hard</a></h3>
+                <p class="essay-subtitle">Part 8 of the Insurance Onboarding Series.</p>
+                <div class="essay-meta">
+                  <span class="essay-date">March 2024</span>
+                  <span class="essay-tag">Insurtech</span>
+                </div>
+              </li>
+
+              <li class="essay-item">
+                <h3 class="essay-title"><a href="https://carrieflips.substack.com/p/risky-business-dealing-with-applicant" target="_blank" rel="noopener" class="essay-link">Risky Business: Dealing with Applicant Rejection</a></h3>
+                <p class="essay-subtitle">Part 7 of the Insurance Onboarding Series.</p>
+                <div class="essay-meta">
+                  <span class="essay-date">March 2024</span>
+                  <span class="essay-tag">Insurtech</span>
+                </div>
+              </li>
+
+              <li class="essay-item">
+                <h3 class="essay-title"><a href="https://carrieflips.substack.com/p/the-application-is-the-product-make-it" target="_blank" rel="noopener" class="essay-link">The Application is the Product: Make it Simple, but Maybe Not So Short</a></h3>
+                <p class="essay-subtitle">Part 6 of the Insurance Onboarding Series.</p>
+                <div class="essay-meta">
+                  <span class="essay-date">February 2024</span>
+                  <span class="essay-tag">Insurtech</span>
+                  <span class="essay-tag">Design</span>
+                </div>
+              </li>
+
+              <li class="essay-item">
+                <h3 class="essay-title"><a href="https://carrieflips.substack.com/p/simplifying-the-policy-and-goldilocks" target="_blank" rel="noopener" class="essay-link">Simplifying the Policy and "Goldilocks Problems"</a></h3>
+                <p class="essay-subtitle">Part 5 of the Insurance Onboarding Series.</p>
+                <div class="essay-meta">
+                  <span class="essay-date">February 2024</span>
+                  <span class="essay-tag">Insurtech</span>
+                  <span class="essay-tag">Design</span>
+                </div>
+              </li>
+
+              <li class="essay-item">
+                <h3 class="essay-title"><a href="https://carrieflips.substack.com/p/insurance-policies-are-like-swiss-cheese" target="_blank" rel="noopener" class="essay-link">Insurance Policies are like Swiss Cheese and Pokemon Cards</a></h3>
+                <p class="essay-subtitle">Part 4 of the Insurance Onboarding Series — explaining why insurance policies are so damn long and confusing.</p>
+                <div class="essay-meta">
+                  <span class="essay-date">February 2024</span>
+                  <span class="essay-tag">Insurtech</span>
+                </div>
+              </li>
+
+              <li class="essay-item">
+                <h3 class="essay-title"><a href="https://carrieflips.substack.com/p/designing-for-the-differences-and" target="_blank" rel="noopener" class="essay-link">Designing for the Differences, and Avoiding Delight</a></h3>
+                <p class="essay-subtitle">Part 3 of the Insurance Onboarding Series.</p>
+                <div class="essay-meta">
+                  <span class="essay-date">February 2024</span>
+                  <span class="essay-tag">Insurtech</span>
+                  <span class="essay-tag">Design</span>
+                </div>
+              </li>
+
+              <li class="essay-item">
+                <h3 class="essay-title"><a href="https://carrieflips.substack.com/p/how-different-kinds-of-insurance-are" target="_blank" rel="noopener" class="essay-link">How Different Kinds of Insurance are Different</a></h3>
+                <p class="essay-subtitle">Part 2 of the Insurance Onboarding Series — the story of one average American's compounding confusion about insurance.</p>
+                <div class="essay-meta">
+                  <span class="essay-date">February 2024</span>
+                  <span class="essay-tag">Insurtech</span>
+                </div>
+              </li>
+
+              <li class="essay-item">
+                <h3 class="essay-title"><a href="https://carrieflips.substack.com/p/eli5-what-is-insurance" target="_blank" rel="noopener" class="essay-link">ELI5: What is Insurance?</a></h3>
+                <p class="essay-subtitle">Part 1 of the Insurance Onboarding Series — how insurance works, and solidifying the basic terms you've probably heard but don't totally know.</p>
+                <div class="essay-meta">
+                  <span class="essay-date">February 2024</span>
+                  <span class="essay-tag">Insurtech</span>
+                </div>
+              </li>
+
+              <li class="essay-item">
+                <h3 class="essay-title"><a href="https://carrieflips.substack.com/p/the-insurance-onboarding-series" target="_blank" rel="noopener" class="essay-link">The Insurance Onboarding Series</a></h3>
+                <p class="essay-subtitle">Lessons from an insurtech designer, hoping to prepare more people to get involved in "boring," broken industries like insurance.</p>
+                <div class="essay-meta">
+                  <span class="essay-date">February 2024</span>
+                  <span class="essay-tag">Insurtech</span>
+                </div>
+              </li>
+
+            </ul>
+          </section>
+
+        </div><!-- /work-sections -->
+
+      <!-- FOOTER -->
+      <site-footer id="site-footer"></site-footer>
 
     </div>
   </div>
@@ -619,6 +1447,15 @@
   <!-- RIGHT COLUMN                                              -->
   <!-- ══════════════════════════════════════════════════════════ -->
   <div class="col-right">
+    <div class="ambient-layer" aria-hidden="true">
+      <div class="ambient-circle"></div>
+      <div class="ambient-circle"></div>
+      <div class="ambient-circle"></div>
+      <div class="ambient-circle"></div>
+      <div class="ambient-circle"></div>
+      <div class="ambient-circle"></div>
+      <div class="ambient-circle"></div>
+    </div>
     <div class="right-inner">
 
       <!-- WORK SLIDESHOW -->
@@ -642,6 +1479,7 @@
     </div>
   </div>
 
+  <script src="js/site-footer.js"></script>
   <script>
     // ── STRINGS ────────────────────────────────────────────────
     // Update translations here — do not hardcode in HTML
@@ -690,11 +1528,13 @@
         const key = el.dataset.i18n;
         if (s[key] !== undefined) el.innerHTML = s[key];
       });
-      document.querySelector('.lang-btn').textContent = lang.toUpperCase();
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.textContent = lang.toUpperCase());
     }
 
     const RIGHT_WORK = '#111111';
-    const RIGHT_PLAY = '#D4E8A0';
+    const RIGHT_PLAY = '#FFC184';
+    const LEFT_WORK  = '#F0EDE6';
+    const LEFT_PLAY  = '#dbffb0';
 
     // ── SLIDESHOW ──────────────────────────────────────────────
 
@@ -734,24 +1574,65 @@
 
     const slideshows = {};
 
+    // ── CROSS-FADE ─────────────────────────────────────────────
+
+    let cfTimer1 = null, cfTimer2 = null, cfTimer3 = null;
+
+    function crossFadePanels(outgoing, incoming) {
+      clearTimeout(cfTimer1);
+      clearTimeout(cfTimer2);
+      clearTimeout(cfTimer3);
+      outgoing.classList.remove('entering');
+      incoming.classList.remove('leaving');
+
+      const outgoingIsVisible = outgoing.classList.contains('visible');
+      outgoing.classList.remove('visible');
+
+      if (outgoingIsVisible) {
+        outgoing.classList.add('leaving');
+        cfTimer3 = setTimeout(() => outgoing.classList.remove('leaving'), 250);
+      }
+
+      const delay = outgoingIsVisible ? 50 : 0;
+      cfTimer1 = setTimeout(() => {
+        incoming.classList.add('visible', 'entering');
+        cfTimer2 = setTimeout(() => incoming.classList.remove('entering'), 300);
+      }, delay);
+    }
+
     // ── TOGGLE ─────────────────────────────────────────────────
 
+    let currentMode = 'work';
+
     function setActive(which) {
-      const btnWork   = document.getElementById('btn-work');
-      const btnPlay   = document.getElementById('btn-play');
-      const panelWork = document.getElementById('panel-work');
-      const panelPlay = document.getElementById('panel-play');
-      const buildCard = document.getElementById('build-card');
-      const colRight  = document.querySelector('.col-right');
+      if (which === currentMode) return;
+      currentMode = which;
+
+      const btnWork        = document.getElementById('btn-work');
+      const btnPlay        = document.getElementById('btn-play');
+      const panelWork      = document.getElementById('panel-work');
+      const panelPlay      = document.getElementById('panel-play');
+      const colRight       = document.querySelector('.col-right');
+      const colLeft        = document.querySelector('.col-left');
+      const subnav         = document.getElementById('subnav');
+      const workSections   = document.getElementById('work-sections');
+      const footer         = document.getElementById('site-footer');
 
       if (which === 'work') {
         btnWork.className  = 'toggle-btn active';
         btnPlay.className  = 'toggle-btn inactive';
-        panelWork.classList.add('visible');
-        panelPlay.classList.remove('visible');
-        buildCard.classList.remove('hidden');
+        crossFadePanels(panelPlay, panelWork);
         colRight.style.background = RIGHT_WORK;
+        colLeft.style.background  = LEFT_WORK;
         colRight.classList.remove('play-mode');
+        footer.removeAttribute('variant');
+        colLeft.classList.add('work-mode');
+        subnav.classList.remove('collapsed');
+        workSections.classList.remove('hidden');
+
+        // Reset subnav to About as default on every Work activation
+        document.querySelectorAll('.subnav-btn').forEach(b => b.classList.remove('active'));
+        document.querySelector('[data-sub="about"]').classList.add('active');
 
         slideshows.play.stop();
         slideshows.play.el.classList.add('hidden');
@@ -760,11 +1641,14 @@
       } else {
         btnPlay.className  = 'toggle-btn active';
         btnWork.className  = 'toggle-btn inactive';
-        panelPlay.classList.add('visible');
-        panelWork.classList.remove('visible');
-        buildCard.classList.add('hidden');
+        crossFadePanels(panelWork, panelPlay);
         colRight.style.background = RIGHT_PLAY;
+        colLeft.style.background  = LEFT_PLAY;
         colRight.classList.add('play-mode');
+        footer.setAttribute('variant', 'play');
+        colLeft.classList.remove('work-mode');
+        subnav.classList.add('collapsed');
+        workSections.classList.add('hidden');
 
         slideshows.work.stop();
         slideshows.work.el.classList.add('hidden');
@@ -779,19 +1663,20 @@
 
     function sizePanels() {
       const wrap = document.getElementById('panels-wrap');
-      const work = document.getElementById('panel-work');
       const play = document.getElementById('panel-play');
 
-      [work, play].forEach(p => {
-        p.style.position = 'static';
-        p.style.opacity  = '1';
-      });
-      const h = Math.max(work.offsetHeight, play.offsetHeight);
-      [work, play].forEach(p => {
-        p.style.position = '';
-        p.style.opacity  = '';
-      });
+      // Work panel is empty (bio moved to About section) — collapse the wrap
+      if (currentMode === 'work') {
+        wrap.style.height = '0';
+        return;
+      }
 
+      // Play mode: size wrap to the play panel's natural height
+      play.style.position = 'static';
+      play.style.opacity  = '1';
+      const h = play.offsetHeight;
+      play.style.position = '';
+      play.style.opacity  = '';
       wrap.style.height = h + 'px';
     }
 
@@ -803,10 +1688,57 @@
       slideshows.work.start();
       sizePanels();
 
-      document.querySelector('.lang-btn').addEventListener('click', () => {
+      // Trigger page-load stagger — add class once, never on toggle
+      document.querySelector('.left-inner').classList.add('animate-in');
+
+      // Back to top
+      document.getElementById('subnav-top').addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      // Sticky subnav — observe sentinel to detect when subnav has engaged
+      const sentinel = document.getElementById('subnav-sentinel');
+      const subnavEl = document.getElementById('subnav');
+      const stickyObserver = new IntersectionObserver(
+        ([entry]) => subnavEl.classList.toggle('is-stuck', !entry.isIntersecting),
+        { threshold: 0 }
+      );
+      stickyObserver.observe(sentinel);
+
+      // Subnav item selection + scroll-to section
+      document.querySelectorAll('.subnav-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.subnav-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const target = document.getElementById(btn.dataset.sub);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.addEventListener('click', () => {
         applyLang(currentLang === 'en' ? 'es' : 'en');
         sizePanels(); // re-measure in case Spanish text is taller
+      }));
+
+      // Build log row — navigate to project page on click
+      document.querySelectorAll('.build-table tbody tr[data-href]').forEach(row => {
+        row.addEventListener('click', () => {
+          window.location.href = row.dataset.href;
+        });
       });
+
+      // Restore subnav active state from URL hash (e.g. returning from a build log page)
+      const hash = window.location.hash.slice(1);
+      if (hash) {
+        const matchBtn = document.querySelector(`.subnav-btn[data-sub="${hash}"]`);
+        if (matchBtn) {
+          document.querySelectorAll('.subnav-btn').forEach(b => b.classList.remove('active'));
+          matchBtn.classList.add('active');
+        }
+      }
     });
 
     window.addEventListener('resize', sizePanels);
