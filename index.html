@@ -1373,8 +1373,13 @@
 
           <section class="content-section" id="logo-marquee-section">
             <div class="logo-marquee">
-              <div class="logo-marquee-track" id="logo-marquee-track">
-                <!-- duplicated logo sets injected by JS -->
+              <div class="logo-marquee-track" id="logo-marquee-track-a">
+                <!-- injected by JS -->
+              </div>
+            </div>
+            <div class="logo-marquee">
+              <div class="logo-marquee-track" id="logo-marquee-track-b">
+                <!-- injected by JS -->
               </div>
             </div>
           </section>
@@ -1909,56 +1914,62 @@
         'logos/woz-logo.png',
       ];
 
-      const track = document.getElementById('logo-marquee-track');
-      if (!track) return;
-
-      // Build two identical sets for seamless looping
-      [ALL_LOGOS, ALL_LOGOS].forEach(set => {
-        set.forEach(src => {
-          const img = document.createElement('img');
-          img.src = src;
-          img.alt = '';
-          track.appendChild(img);
-        });
-      });
-
-      const BASE_SPEED = 0.6;   // px per frame at rest
-      let position = 0;
-      let velocity = BASE_SPEED;
+      const BASE_SPEED = 0.6;
       let lastScrollY = window.scrollY;
-      let halfWidth = 0;
+      let scrollDelta = 0;
 
-      // Measure after images have a chance to load
-      function getHalfWidth() {
-        halfWidth = track.scrollWidth / 2;
-      }
-      window.addEventListener('load', getHalfWidth);
-      setTimeout(getHalfWidth, 500);
-
+      // Shared scroll listener — both rows read from scrollDelta
       window.addEventListener('scroll', () => {
-        const delta = window.scrollY - lastScrollY;
+        scrollDelta = window.scrollY - lastScrollY;
         lastScrollY = window.scrollY;
-        // Inject scroll momentum — positive delta (scroll down) speeds it up,
-        // negative (scroll up) slows or briefly reverses
-        velocity += delta * 0.18;
       });
 
-      function tick() {
-        // Exponential decay back to base speed
-        velocity += (BASE_SPEED - velocity) * 0.06;
+      function initRow(trackId, direction) {
+        const track = document.getElementById(trackId);
+        if (!track) return;
 
-        position -= velocity;
+        // Two identical sets for seamless looping
+        [ALL_LOGOS, ALL_LOGOS].forEach(set => {
+          set.forEach(src => {
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = '';
+            track.appendChild(img);
+          });
+        });
 
-        // Seamless reset once the first set has scrolled fully off
-        if (halfWidth > 0 && Math.abs(position) >= halfWidth) {
-          position += halfWidth;
+        let position = 0;
+        let velocity = BASE_SPEED * direction;
+        let halfWidth = 0;
+
+        function measure() { halfWidth = track.scrollWidth / 2; }
+        window.addEventListener('load', measure);
+        setTimeout(measure, 500);
+
+        function tick() {
+          const target = BASE_SPEED * direction;
+          // Scroll down pushes row A faster left, row B faster right (opposite)
+          const boost = scrollDelta * 0.18 * direction;
+          velocity += boost;
+          scrollDelta = 0; // consumed — prevent double-applying across rows
+
+          velocity += (target - velocity) * 0.06;
+          position += velocity;
+
+          if (halfWidth > 0) {
+            if (position <= -halfWidth) position += halfWidth;
+            if (position >= halfWidth)  position -= halfWidth;
+          }
+
+          track.style.transform = `translateX(${position}px)`;
+          requestAnimationFrame(tick);
         }
 
-        track.style.transform = `translateX(${position}px)`;
         requestAnimationFrame(tick);
       }
 
-      requestAnimationFrame(tick);
+      initRow('logo-marquee-track-a', -1); // scrolls left
+      initRow('logo-marquee-track-b',  1); // scrolls right
     })();
 
     // ── LOGO ROTATOR ──────────────────────────────────────────────
