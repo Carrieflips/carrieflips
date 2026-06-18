@@ -551,6 +551,19 @@
     /* ── HERO PLACEHOLDER ────────────────────────────────────── */
 
 
+    /* ── SCROLL FADE-IN ──────────────────────────────────────── */
+
+    .scroll-fade {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+
+    .scroll-fade.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     /* ── WORK SECTIONS ───────────────────────────────────────── */
 
     .work-sections {
@@ -1823,6 +1836,23 @@
     });
 
     window.addEventListener('resize', sizePanels);
+
+    // ── SCROLL FADE-IN ────────────────────────────────────────────
+    (function () {
+      const sections = document.querySelectorAll('.content-section:not(#about)');
+      sections.forEach(el => el.classList.add('scroll-fade'));
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08 });
+
+      sections.forEach(el => observer.observe(el));
+    })();
 
     // ── LOGO ROTATOR ──────────────────────────────────────────────
     (function () {
