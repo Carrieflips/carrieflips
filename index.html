@@ -697,6 +697,33 @@
       }
     }
 
+    /* ── LOGO MARQUEE ────────────────────────────────────────── */
+
+    .logo-marquee {
+      overflow: hidden;
+      padding: 32px 0;
+      border-top: 1px solid var(--border);
+      margin: 0 -48px; /* bleed past section padding */
+      cursor: default;
+      user-select: none;
+    }
+
+    .logo-marquee-track {
+      display: flex;
+      align-items: center;
+      gap: 56px;
+      width: max-content;
+      will-change: transform;
+    }
+
+    .logo-marquee-track img {
+      height: 22px;
+      width: auto;
+      flex-shrink: 0;
+      filter: grayscale(1) opacity(0.7);
+      pointer-events: none;
+    }
+
     /* ── CLIENT LOGOS ────────────────────────────────────────── */
 
     #logos {
@@ -1344,6 +1371,14 @@
             </div>
           </section>
 
+          <section class="content-section" id="logo-marquee-section">
+            <div class="logo-marquee">
+              <div class="logo-marquee-track" id="logo-marquee-track">
+                <!-- duplicated logo sets injected by JS -->
+              </div>
+            </div>
+          </section>
+
           <section class="content-section" id="case-studies">
             <h2 class="section-heading">Case Studies</h2>
             <div class="cs-grid">
@@ -1852,6 +1887,78 @@
       }, { threshold: 0.08 });
 
       sections.forEach(el => observer.observe(el));
+    })();
+
+    // ── LOGO MARQUEE ──────────────────────────────────────────────
+    (function () {
+      const ALL_LOGOS = [
+        'logos/vouch-logo.png',
+        'logos/mason-logo.png',
+        'logos/pylon-logo.png',
+        'logos/lighthouse-logo.png',
+        'logos/BTV-logo.png',
+        'logos/POV-ventures.png',
+        'logos/amino-logo.png',
+        'logos/brikmate-logo.png',
+        'logos/drive-capital-logo.png',
+        'logos/grace-money-logo.png',
+        'logos/instaswitch-logo.png',
+        'logos/keystone-bio-logo.png',
+        'logos/level-money-logo.png',
+        'logos/practice-logo.png',
+        'logos/woz-logo.png',
+      ];
+
+      const track = document.getElementById('logo-marquee-track');
+      if (!track) return;
+
+      // Build two identical sets for seamless looping
+      [ALL_LOGOS, ALL_LOGOS].forEach(set => {
+        set.forEach(src => {
+          const img = document.createElement('img');
+          img.src = src;
+          img.alt = '';
+          track.appendChild(img);
+        });
+      });
+
+      const BASE_SPEED = 0.6;   // px per frame at rest
+      let position = 0;
+      let velocity = BASE_SPEED;
+      let lastScrollY = window.scrollY;
+      let halfWidth = 0;
+
+      // Measure after images have a chance to load
+      function getHalfWidth() {
+        halfWidth = track.scrollWidth / 2;
+      }
+      window.addEventListener('load', getHalfWidth);
+      setTimeout(getHalfWidth, 500);
+
+      window.addEventListener('scroll', () => {
+        const delta = window.scrollY - lastScrollY;
+        lastScrollY = window.scrollY;
+        // Inject scroll momentum — positive delta (scroll down) speeds it up,
+        // negative (scroll up) slows or briefly reverses
+        velocity += delta * 0.18;
+      });
+
+      function tick() {
+        // Exponential decay back to base speed
+        velocity += (BASE_SPEED - velocity) * 0.06;
+
+        position -= velocity;
+
+        // Seamless reset once the first set has scrolled fully off
+        if (halfWidth > 0 && Math.abs(position) >= halfWidth) {
+          position += halfWidth;
+        }
+
+        track.style.transform = `translateX(${position}px)`;
+        requestAnimationFrame(tick);
+      }
+
+      requestAnimationFrame(tick);
     })();
 
     // ── LOGO ROTATOR ──────────────────────────────────────────────
