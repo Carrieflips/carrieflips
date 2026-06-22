@@ -699,13 +699,23 @@
 
     /* ── LOGO MARQUEE ────────────────────────────────────────── */
 
+    #logo-marquee-section {
+      border-top: none;
+      border-bottom: 1px solid var(--border);
+    }
+
+    #case-studies {
+      border-top: none;
+    }
+
     .logo-marquee {
       overflow: hidden;
       padding: 32px 0;
-      border-top: 1px solid var(--border);
       margin: 0 -48px; /* bleed past section padding */
       cursor: default;
       user-select: none;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
     }
 
     .logo-marquee-track {
@@ -1365,13 +1375,7 @@
             </p>
           </section>
 
-          <section class="content-section" id="logos">
-<div class="logos-grid" id="logos-grid">
-              <!-- populated by JS -->
-            </div>
-          </section>
-
-          <section class="content-section" id="logo-marquee-section">
+<section class="content-section" id="logo-marquee-section">
             <div class="logo-marquee">
               <div class="logo-marquee-track" id="logo-marquee-track-a">
                 <!-- injected by JS -->
@@ -1917,62 +1921,64 @@
         'logos/woz-logo.png',
       ];
 
-      const BASE_SPEED = 0.22; // gentle drift
-      let lastScrollY = window.scrollY;
-      let pendingDelta = 0;
+      // Track whether the marquee section is in the viewport
+      let marqueeVisible = false;
+      const marqueeSection = document.getElementById('logo-marquee-section');
+      if (marqueeSection) {
+        new IntersectionObserver(entries => {
+          marqueeVisible = entries[0].isIntersecting;
+        }, { threshold: 0 }).observe(marqueeSection);
+      }
 
-      window.addEventListener('scroll', () => {
-        pendingDelta += (window.scrollY - lastScrollY) * 0.04; // subtle boost
-        lastScrollY = window.scrollY;
-      });
-
-      function initRow(trackId, logos, direction) {
+      // Each row is fully self-contained — no shared mutable state
+      function runRow(trackId, logos, direction) {
         const track = document.getElementById(trackId);
         if (!track) return;
 
-        // Duplicate the set so the track loops seamlessly
-        [logos, logos].forEach(set => {
-          set.forEach(src => {
-            const img = document.createElement('img');
-            img.src = src;
-            img.alt = '';
-            track.appendChild(img);
-          });
+        // Two copies for seamless looping — valid position range is always (-halfWidth, 0]
+        [...logos, ...logos].forEach(src => {
+          const img = document.createElement('img');
+          img.src = src;
+          img.alt = '';
+          track.appendChild(img);
         });
 
+        const BASE = 0.22 * direction;
+        let velocity = BASE;
         let position = 0;
-        let velocity = BASE_SPEED * direction;
         let halfWidth = 0;
+        let lastY = window.scrollY;
 
-        function measure() { halfWidth = track.scrollWidth / 2; }
+        window.addEventListener('scroll', () => {
+          const delta = window.scrollY - lastY;
+          lastY = window.scrollY;
+          // Only boost speed when the marquee is visible on screen
+          if (marqueeVisible) velocity += delta * 0.05 * direction;
+        });
+
+        function measure() {
+          halfWidth = track.scrollWidth / 2;
+          if (direction === 1 && halfWidth > 0) position = -halfWidth;
+        }
+        setTimeout(measure, 100);
         window.addEventListener('load', measure);
-        setTimeout(measure, 600);
 
-        function tick() {
-          const target = BASE_SPEED * direction;
-          velocity += pendingDelta * direction;
-          velocity += (target - velocity) * 0.04; // slow decay back to base
-
+        (function tick() {
+          velocity += (BASE - velocity) * 0.04;
           position += velocity;
 
           if (halfWidth > 0) {
-            if (position <= -halfWidth) position += halfWidth;
-            if (position >= halfWidth)  position -= halfWidth;
+            position = position % halfWidth;
+            if (position > 0) position -= halfWidth;
           }
 
           track.style.transform = `translateX(${position}px)`;
           requestAnimationFrame(tick);
-        }
-
-        requestAnimationFrame(tick);
+        })();
       }
 
-      initRow('logo-marquee-track-a', LOGOS_A, -1);
-      initRow('logo-marquee-track-b', LOGOS_B,  1);
-
-      // Clear pending delta after both rows have consumed it each frame
-      function clearDelta() { pendingDelta = 0; requestAnimationFrame(clearDelta); }
-      requestAnimationFrame(clearDelta);
+      runRow('logo-marquee-track-a', LOGOS_A, -1);
+      runRow('logo-marquee-track-b', LOGOS_B,  1);
     })();
 
     // ── LOGO ROTATOR ──────────────────────────────────────────────
