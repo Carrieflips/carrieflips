@@ -1896,7 +1896,7 @@
 
     // ── LOGO MARQUEE ──────────────────────────────────────────────
     (function () {
-      const ALL_LOGOS = [
+      const LOGOS_A = [
         'logos/vouch-logo.png',
         'logos/mason-logo.png',
         'logos/pylon-logo.png',
@@ -1905,6 +1905,9 @@
         'logos/POV-ventures.png',
         'logos/amino-logo.png',
         'logos/brikmate-logo.png',
+      ];
+
+      const LOGOS_B = [
         'logos/drive-capital-logo.png',
         'logos/grace-money-logo.png',
         'logos/instaswitch-logo.png',
@@ -1914,22 +1917,21 @@
         'logos/woz-logo.png',
       ];
 
-      const BASE_SPEED = 0.6;
+      const BASE_SPEED = 0.22; // gentle drift
       let lastScrollY = window.scrollY;
-      let scrollDelta = 0;
+      let pendingDelta = 0;
 
-      // Shared scroll listener — both rows read from scrollDelta
       window.addEventListener('scroll', () => {
-        scrollDelta = window.scrollY - lastScrollY;
+        pendingDelta += (window.scrollY - lastScrollY) * 0.04; // subtle boost
         lastScrollY = window.scrollY;
       });
 
-      function initRow(trackId, direction) {
+      function initRow(trackId, logos, direction) {
         const track = document.getElementById(trackId);
         if (!track) return;
 
-        // Two identical sets for seamless looping
-        [ALL_LOGOS, ALL_LOGOS].forEach(set => {
+        // Duplicate the set so the track loops seamlessly
+        [logos, logos].forEach(set => {
           set.forEach(src => {
             const img = document.createElement('img');
             img.src = src;
@@ -1944,16 +1946,13 @@
 
         function measure() { halfWidth = track.scrollWidth / 2; }
         window.addEventListener('load', measure);
-        setTimeout(measure, 500);
+        setTimeout(measure, 600);
 
         function tick() {
           const target = BASE_SPEED * direction;
-          // Scroll down pushes row A faster left, row B faster right (opposite)
-          const boost = scrollDelta * 0.18 * direction;
-          velocity += boost;
-          scrollDelta = 0; // consumed — prevent double-applying across rows
+          velocity += pendingDelta * direction;
+          velocity += (target - velocity) * 0.04; // slow decay back to base
 
-          velocity += (target - velocity) * 0.06;
           position += velocity;
 
           if (halfWidth > 0) {
@@ -1968,8 +1967,12 @@
         requestAnimationFrame(tick);
       }
 
-      initRow('logo-marquee-track-a', -1); // scrolls left
-      initRow('logo-marquee-track-b',  1); // scrolls right
+      initRow('logo-marquee-track-a', LOGOS_A, -1);
+      initRow('logo-marquee-track-b', LOGOS_B,  1);
+
+      // Clear pending delta after both rows have consumed it each frame
+      function clearDelta() { pendingDelta = 0; requestAnimationFrame(clearDelta); }
+      requestAnimationFrame(clearDelta);
     })();
 
     // ── LOGO ROTATOR ──────────────────────────────────────────────
