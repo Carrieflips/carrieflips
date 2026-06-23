@@ -24,7 +24,7 @@
       --font-display: 'Asap', sans-serif;
       --font-body: 'Asap', sans-serif;
       --body-small: 14px;
-      --hero-font: 'Knewave', cursive;
+      --hero-font: 'Asap', sans-serif;
       --hero-size: 96px;
     }
 
@@ -59,6 +59,7 @@
     .hero-title {
       font-family: var(--hero-font);
       font-size: var(--hero-size);
+      font-weight: 700;
       line-height: 1.0;
       color: var(--ink);
     }
@@ -127,6 +128,42 @@
       margin-bottom: 14px;
     }
     .project-desc p:last-child { margin-bottom: 0; }
+
+    /* ── HEADER ROW ──────────────────────────────────────────── */
+
+    .header-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 64px;
+    }
+    .header-row header {
+      flex: 1;
+    }
+    .firsts-aside {
+      flex: 0 0 220px;
+      padding-top: 6px;
+    }
+
+    /* ── PHOTOS ─────────────────────────────────────────────── */
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .photo-grid img {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+      display: block;
+    }
+    .photo-wide {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+      display: block;
+      margin-top: 12px;
+    }
 
     /* ── SECTION STRUCTURE ────────────────────────────────────── */
 
@@ -290,7 +327,7 @@
     }
     .learning-body {
       font-family: var(--font-body);
-      font-size: var(--body-small); font-weight: 300; color: var(--muted-dark);
+      font-size: 17px; font-weight: 300; color: var(--muted-dark);
       line-height: 1.65; margin-bottom: 12px; max-width: 600px;
     }
     .learning-body:last-child { margin-bottom: 0; }
@@ -379,8 +416,6 @@
 </head>
 <body>
 
-  <coming-soon-banner></coming-soon-banner>
-
   <nav class="page-nav">
     <a href="index.html#build-log" class="back-link">← Back</a>
     <a href="index.html" class="wordmark">Carrieflips</a>
@@ -413,32 +448,30 @@
 
     <!-- ── HEADER ─────────────────────────────────────────────── -->
 
-    <header>
-      <div class="project-eyebrow">
-        <span class="meta-tag">iOS · React Native</span>
-        <span class="meta-dot">·</span>
-        <span class="status-pill">Launched</span>
-      </div>
-      <div class="project-desc">
-        <p>Since November of 2025, I've been a somewhat regular user of a simple app called Bend. Bend audibly guides users through simple stretching routines of varying length, and is reportedly earning $500,000 a month in subscription revenue.</p>
-        <p>I'm not typically motivated by the financial potential of a project, but had recently created a note in my phone of all the pressure points and head massage techniques that were most effective at relieving my migraines.</p>
-        <p>Head Rub is a mobile application designed to guide folks experiencing migraines, eye strain, or other tension in their head, face, and neck through self-administered massage routines. The graphics are hand drawn by me, and audio voice overs provided by my Dad.</p>
-      </div>
-    </header>
+    <div class="header-row">
+      <header>
+        <div class="project-eyebrow">
+          <span class="meta-tag">iOS · React Native</span>
+          <span class="meta-dot">·</span>
+          <span class="status-pill">Launched</span>
+        </div>
+        <div class="project-desc">
+          <p>Since November of 2025, I've been a somewhat regular user of a simple app called Bend. Bend audibly guides users through simple stretching routines of varying length, and is reportedly earning $500,000 a month in subscription revenue.</p>
+          <p>I'm not typically motivated by the financial potential of a project, but had recently created a note in my phone of all the pressure points and head massage techniques that were most effective at relieving my migraines.</p>
+          <p>Head Rub is a mobile application designed to guide folks experiencing migraines, eye strain, or other tension in their head, face, and neck through self-administered massage routines. The graphics are hand drawn by me, and audio voice overs provided by my Dad.</p>
+        </div>
+      </header>
 
-    <hr class="section-rule" />
-
-    <!-- ── FIRSTS ────────────────────────────────────────────────── -->
-
-    <section class="log-section constrained">
-      <h2 class="section-label">Firsts</h2>
-      <ul class="firsts-list">
-        <li>Productionizing payments</li>
-        <li>App Store submission (and approval!)</li>
-        <li>Feature flagging</li>
-        <li>Content management system</li>
-      </ul>
-    </section>
+      <aside class="firsts-aside">
+        <h2 class="section-label">Firsts</h2>
+        <ul class="firsts-list">
+          <li>Productionizing payments</li>
+          <li>App Store submission (and approval!)</li>
+          <li>Feature flagging</li>
+          <li>Content management system</li>
+        </ul>
+      </aside>
+    </div>
 
     <!-- ── SCREENSHOTS ───────────────────────────────────────────── -->
 
@@ -577,7 +610,6 @@
 
   </div>
 
-  <script src="js/coming-soon-banner.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const hero = document.querySelector('.hero');

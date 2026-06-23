@@ -59,8 +59,7 @@
     .hero-title {
       font-family: var(--hero-font);
       font-size: var(--hero-size);
-      font-weight: 300;
-      letter-spacing: 0.06em;
+      font-weight: 700;
       line-height: 1.1;
       color: var(--ink);
     }
@@ -121,6 +120,21 @@
       margin-bottom: 14px;
     }
     .project-desc p:last-child { margin-bottom: 0; }
+
+    /* ── HEADER ROW ──────────────────────────────────────────── */
+
+    .header-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 64px;
+    }
+    .header-row header {
+      flex: 1;
+    }
+    .firsts-aside {
+      flex: 0 0 220px;
+      padding-top: 6px;
+    }
 
     /* ── SECTION STRUCTURE ────────────────────────────────────── */
 
@@ -192,10 +206,32 @@
     }
     .learning-body {
       font-family: var(--font-body);
-      font-size: var(--body-small); font-weight: 300; color: var(--muted-dark);
+      font-size: 17px; font-weight: 300; color: var(--muted-dark);
       line-height: 1.65; margin-bottom: 12px; max-width: 600px;
     }
     .learning-body:last-child { margin-bottom: 0; }
+
+    /* ── PHOTOS ─────────────────────────────────────────────── */
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 0;
+    }
+    .photo-grid img {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+      display: block;
+    }
+    .photo-wide {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+      display: block;
+      margin-top: 12px;
+    }
 
     /* ── STATUS ──────────────────────────────────────────────── */
 
@@ -256,14 +292,12 @@
 </head>
 <body>
 
-  <coming-soon-banner></coming-soon-banner>
-
   <nav class="page-nav">
     <a href="index.html#build-log" class="back-link">← Back</a>
     <a href="index.html" class="wordmark">Carrieflips</a>
   </nav>
 
-  <section class="hero">
+  <section class="hero" style="background-image: url('Images/kauai-beach-weather/kauai-near-shells 1.png');">
     <div class="hero-inner">
       <p class="hero-label">Build Log</p>
       <h1 class="hero-title">Kauai Beach Weather</h1>
@@ -287,31 +321,39 @@
 
     <!-- ── HEADER ─────────────────────────────────────────────── -->
 
-    <header>
-      <div class="project-eyebrow">
-        <span class="meta-tag">iOS · React Native</span>
-        <span class="meta-dot">·</span>
-        <span class="status-pill">TestFlight</span>
+    <div class="header-row">
+      <header>
+        <div class="project-eyebrow">
+          <span class="meta-tag">iOS · React Native</span>
+          <span class="meta-dot">·</span>
+          <span class="status-pill">TestFlight</span>
+        </div>
+        <div class="project-desc">
+          <p>In January of 2026, I spent a week working remotely with 10 tech workers on the small Hawaiian island of Kauai. Each day at 3pm, we'd close our laptops, grab our beach bags, and open weather apps to make the optimal choice of where to spend the afternoon.</p>
+          <p>At the time I was working as Head of Product at Woz, an AI-enabled mobile app builder focused on selling to small business owners. In a fit of competitive research, I built a simple app that aggregated the weather across beaches in Kauai, helping tourists and locals alike quickly decide where to spend sunny days.</p>
+        </div>
+      </header>
+
+      <aside class="firsts-aside">
+        <h2 class="section-label">Firsts</h2>
+        <ul class="firsts-list">
+          <li>Data integrations (2 weather sources)</li>
+          <li>Environment variables</li>
+          <li>Integrating payments</li>
+          <li>Encryption of user generated data</li>
+          <li>SSH into project files with Cursor</li>
+        </ul>
+      </aside>
+    </div>
+
+    <!-- ── PHOTOS ────────────────────────────────────────────────── -->
+
+    <section class="log-section">
+      <div class="photo-grid">
+        <img src="Images/kauai-beach-weather/KBW-kee-beach.png" alt="Ke'e Beach, Kauai" />
+        <img src="Images/kauai-beach-weather/KBW-social-impact.png" alt="Kauai Beach Weather app" />
       </div>
-      <div class="project-desc">
-        <p>In January of 2026, I spent a week working remotely with 10 tech workers on the small Hawaiian island of Kauai. Each day at 3pm, we'd close our laptops, grab our beach bags, and open weather apps to make the optimal choice of where to spend the afternoon.</p>
-        <p>At the time I was working as Head of Product at Woz, an AI-enabled mobile app builder focused on selling to small business owners. In a fit of competitive research, I built a simple app that aggregated the weather across beaches in Kauai, helping tourists and locals alike quickly decide where to spend sunny days.</p>
-      </div>
-    </header>
-
-    <hr class="section-rule" />
-
-    <!-- ── FIRSTS ────────────────────────────────────────────────── -->
-
-    <section class="log-section constrained">
-      <h2 class="section-label">Firsts</h2>
-      <ul class="firsts-list">
-        <li>Data integrations (2 weather sources)</li>
-        <li>Environment variables</li>
-        <li>Integrating payments</li>
-        <li>Encryption of user generated data</li>
-        <li>SSH into project files with Cursor</li>
-      </ul>
+      <img class="photo-wide" src="Images/kauai-beach-weather/KBW-beach-cards.png" alt="Kauai beach weather cards" />
     </section>
 
     <!-- ── TOOL STACK ────────────────────────────────────────────── -->

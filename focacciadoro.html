@@ -59,7 +59,6 @@
       font-family: var(--hero-font);
       font-size: var(--hero-size);
       font-weight: 700;
-      font-style: italic;
       line-height: 1.0;
       color: var(--ink);
     }
@@ -87,8 +86,46 @@
     .wordmark:hover { opacity: 0.7; }
 
     .page-content {
-      max-width: 720px;
       padding: 56px 48px 120px;
+    }
+
+    .page-content header,
+    .constrained { max-width: 720px; }
+
+    /* ── HEADER ROW ──────────────────────────────────────────── */
+
+    .header-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 64px;
+    }
+    .header-row header {
+      flex: 1;
+    }
+    .firsts-aside {
+      flex: 0 0 220px;
+      padding-top: 6px;
+    }
+
+    /* ── PHOTOS ─────────────────────────────────────────────── */
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .photo-grid img {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+      display: block;
+    }
+    .photo-wide {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+      display: block;
+      margin-top: 12px;
     }
 
     .project-eyebrow {
@@ -195,8 +232,6 @@
 </head>
 <body>
 
-  <coming-soon-banner></coming-soon-banner>
-
   <nav class="page-nav">
     <a href="index.html#build-log" class="back-link">← Back</a>
     <a href="index.html" class="wordmark">Carrieflips</a>
@@ -230,12 +265,12 @@
         <span class="meta-dot">·</span>
         <span class="status-pill">In Development</span>
       </div>
-      <p class="project-desc">A web app that combines the rhythm of making focaccia with intervals of focused work called pomodoros.</p>
+      <div class="project-desc">
+        <p>A web app that combines the rhythm of making focaccia with intervals of focused work called pomodoros.</p>
+      </div>
     </header>
 
-    <hr class="section-rule" />
-
-    <section class="log-section">
+    <section class="log-section constrained">
       <h2 class="section-label">Build Log</h2>
 
       <div class="log-entry">
@@ -264,14 +299,13 @@
 
     </section>
 
-    <section class="log-section">
+    <section class="log-section constrained">
       <h2 class="section-label">Lessons</h2>
       <p class="placeholder-note">Notes will go here as the project develops.</p>
     </section>
 
   </div>
 
-  <script src="js/coming-soon-banner.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const hero = document.querySelector('.hero');

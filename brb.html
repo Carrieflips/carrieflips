@@ -122,6 +122,42 @@
     }
     .project-desc p:last-child { margin-bottom: 0; }
 
+    /* ── HEADER ROW ──────────────────────────────────────────── */
+
+    .header-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 64px;
+    }
+    .header-row header {
+      flex: 1;
+    }
+    .firsts-aside {
+      flex: 0 0 220px;
+      padding-top: 6px;
+    }
+
+    /* ── PHOTOS ─────────────────────────────────────────────── */
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .photo-grid img {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+      display: block;
+    }
+    .photo-wide {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+      display: block;
+      margin-top: 12px;
+    }
+
     /* ── SECTION STRUCTURE ────────────────────────────────────── */
 
     hr.section-rule { border: none; border-top: 1px solid var(--border); margin: 48px 0 0; }
@@ -192,7 +228,7 @@
     }
     .learning-body {
       font-family: var(--font-body);
-      font-size: var(--body-small); font-weight: 300; color: var(--muted-dark);
+      font-size: 17px; font-weight: 300; color: var(--muted-dark);
       line-height: 1.65; margin-bottom: 12px; max-width: 600px;
     }
     .learning-body:last-child { margin-bottom: 0; }
@@ -248,8 +284,6 @@
 </head>
 <body>
 
-  <coming-soon-banner></coming-soon-banner>
-
   <nav class="page-nav">
     <a href="index.html#build-log" class="back-link">← Back</a>
     <a href="index.html" class="wordmark">Carrieflips</a>
@@ -279,31 +313,29 @@
 
     <!-- ── HEADER ─────────────────────────────────────────────── -->
 
-    <header>
-      <div class="project-eyebrow">
-        <span class="meta-tag">iOS · React Native</span>
-        <span class="meta-dot">·</span>
-        <span class="status-pill">TestFlight</span>
-      </div>
-      <div class="project-desc">
-        <p>I'm not great at keeping up with my friends. As I get older and more friends start families or move to new cities, I sometimes let folks I care about "fall out of orbit" as our rhythm of connection shifts.</p>
-        <p>I wanted to build a lightweight tool that could help me build a habit of staying in touch, and be more intentional about nurturing my friendships.</p>
-        <p>Leaning on the best practices in habit forming and social science, I built BRB — a nostalgic AIM-style app targeted at millennials that suggests one person per day to reach out to for 30 days. My hope was that with a defined goal, timely reminders, and some social pressure, people that used the app would re-engage old friendships and feel more connected to their friends.</p>
-      </div>
-    </header>
+    <div class="header-row">
+      <header>
+        <div class="project-eyebrow">
+          <span class="meta-tag">iOS · React Native</span>
+          <span class="meta-dot">·</span>
+          <span class="status-pill">TestFlight</span>
+        </div>
+        <div class="project-desc">
+          <p>I'm not great at keeping up with my friends. As I get older and more friends start families or move to new cities, I sometimes let folks I care about "fall out of orbit" as our rhythm of connection shifts.</p>
+          <p>I wanted to build a lightweight tool that could help me build a habit of staying in touch, and be more intentional about nurturing my friendships.</p>
+          <p>Leaning on the best practices in habit forming and social science, I built BRB — a nostalgic AIM-style app targeted at millennials that suggests one person per day to reach out to for 30 days. My hope was that with a defined goal, timely reminders, and some social pressure, people that used the app would re-engage old friendships and feel more connected to their friends.</p>
+        </div>
+      </header>
 
-    <hr class="section-rule" />
-
-    <!-- ── FIRSTS ────────────────────────────────────────────────── -->
-
-    <section class="log-section constrained">
-      <h2 class="section-label">Firsts</h2>
-      <ul class="firsts-list">
-        <li>Building a test simulator</li>
-        <li>Integrating notifications</li>
-        <li>Querying behavioral data from Supabase</li>
-      </ul>
-    </section>
+      <aside class="firsts-aside">
+        <h2 class="section-label">Firsts</h2>
+        <ul class="firsts-list">
+          <li>Building a test simulator</li>
+          <li>Integrating notifications</li>
+          <li>Querying behavioral data from Supabase</li>
+        </ul>
+      </aside>
+    </div>
 
     <!-- ── TOOL STACK ────────────────────────────────────────────── -->
 
@@ -394,7 +426,6 @@
 
   </div>
 
-  <script src="js/coming-soon-banner.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const hero = document.querySelector('.hero');
